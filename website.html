@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Marks up — How Our History Began</title>
+	<meta name="description" content="A short history of how Marks up began — timeline, mission, and the team." />
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root{
+			--bg-1: #071428;
+			--bg-2: #081726;
+			--card: rgba(255,255,255,0.04);
+			--muted:#9fb0c8;
+			--accent:#60a5fa;
+			--accent-2:#7dd3fc;
+			--glass: rgba(255,255,255,0.04);
+			--radius:14px;
+			--gap:18px;
+			font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+		}
+		html,body{height:100%}
+		body{
+			margin:0;
+			background:
+				radial-gradient(800px 400px at 10% 10%, rgba(96,165,250,0.06), transparent 12%),
+				linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 70%);
+			color: #e8f1fb;
+			-webkit-font-smoothing:antialiased;
+			-moz-osx-font-smoothing:grayscale;
+			line-height:1.55;
+			padding:28px;
+			transition: background 400ms ease;
+		}
+		.container{max-width:1080px;margin:0 auto;padding:0 18px;}
+		header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+		.brand{display:flex;align-items:center;gap:14px}
+		.logo{
+			width:56px;height:56px;border-radius:12px;
+			background:linear-gradient(135deg,var(--accent),var(--accent-2));
+			box-shadow:0 12px 30px rgba(6,24,50,0.5), inset 0 -6px 18px rgba(255,255,255,0.06);
+			display:flex;align-items:center;justify-content:center;font-weight:700;color:#041428;
+			font-size:18px;
+			transition: transform 260ms ease, box-shadow 260ms ease;
+		}
+		.logo:hover{ transform: translateY(-4px) rotate(-5deg); box-shadow:0 18px 38px rgba(6,24,50,0.55); }
+		h1{margin:0;font-size:clamp(20px,2.8vw,30px);font-weight:700;letter-spacing:-0.4px}
+		.tag{color:var(--muted);font-size:13px}
+		.hero{
+			background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+			padding:26px;border-radius:var(--radius);margin-bottom:22px;
+			backdrop-filter: blur(8px);
+			display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+			box-shadow: 0 10px 30px rgba(2,6,23,0.45);
+			border: 1px solid rgba(255,255,255,0.03);
+		}
+		.cta{
+			background:linear-gradient(90deg,var(--accent),var(--accent-2));
+			color:#041428;border:none;padding:10px 18px;border-radius:12px;font-weight:700;
+			cursor:pointer;box-shadow:0 10px 20px rgba(96,165,250,0.12);
+		}
+		.p{color:var(--muted);margin:8px 0 0;font-size:14px}
+
+		/* Timeline */
+		.timeline{margin-top:20px}
+		.timeline-list{position:relative;padding-left:36px}
+		.timeline-list:before{
+			content:'';position:absolute;left:18px;top:12px;bottom:12px;width:2px;
+			background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+			border-radius:2px;
+		}
+		.event{
+			position:relative;margin:18px 0;padding:14px 18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+			border-radius:12px;display:flex;gap:14px;align-items:flex-start;
+			border:1px solid rgba(255,255,255,0.025);
+			transition: transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 260ms ease, background 260ms ease;
+			box-shadow: 0 6px 22px rgba(2,6,23,0.35);
+		}
+		.event:before{
+			content:'';position:absolute;left:-36px;top:18px;width:20px;height:20px;border-radius:50%;
+			background:var(--accent);box-shadow:0 6px 18px rgba(96,165,250,0.14);
+			border: 3px solid rgba(255,255,255,0.06);
+		}
+		.event .year{font-weight:700;color:var(--accent);min-width:62px;font-size:14px}
+		.event .content{flex:1}
+		.event .title{margin:0;font-size:16px;font-weight:600}
+		.event .desc {
+			margin-top:8px;
+			color:var(--muted);
+			font-size:13px;
+			max-height: 0;
+			overflow: hidden;
+			opacity: 0;
+			transition: max-height 360ms ease, opacity 260ms ease;
+		}
+		.event.expanded .desc {
+			opacity: 1;
+			/* max-height will be set inline by JS to the element's scrollHeight */
+		}
+		.event .more{
+			margin-top:10px;color:var(--muted);font-size:13px;
+			max-height:0;overflow:hidden;opacity:0;transition:max-height 360ms ease, opacity 260ms ease;
+		}
+		.event.expanded{ transform: translateY(-6px) scale(1.02); box-shadow:0 18px 40px rgba(2,6,23,0.5);}
+		.event.expanded .more{ opacity:1; }
+
+		.toggle-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent);padding:7px 10px;border-radius:10px;cursor:pointer;font-weight:700}
+
+		/* micro interactions */
+		.event:hover{ transform: translateY(-4px); box-shadow:0 14px 36px rgba(2,6,23,0.45); }
+		.event .title{transition: transform 240ms ease, color 240ms ease;}
+		.event:hover .title{ transform: translateX(4px); color: #ffffff; }
+
+		/* subtle accent glow on expand */
+		.event.expanded{ outline: 1px solid rgba(96,165,250,0.06); box-shadow: 0 22px 50px rgba(96,165,250,0.07); }
+
+		/* small screens */
+		@media (max-width:720px){
+			.hero{grid-template-columns:1fr}
+			.event{flex-direction:column;padding:12px}
+			.event:before{left:-22px;top:14px}
+			.timeline-list{padding-left:22px}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<header>
+			<div class="brand">
+				<!-- small inline SVG logo for a modern look -->
+				<div class="logo" aria-hidden="true" title="Marks up">
+					<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<rect x="2" y="2" width="20" height="20" rx="5" fill="white" fill-opacity="0.06"/>
+						<path d="M7 15 L11 9 L17 15" stroke="#041428" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+				</div>
+				<div>
+					<h1>Marks up</h1>
+					<div class="tag">A 10-person app studio — team-built, client-paid apps</div>
+				</div>
+			</div>
+			<nav class="header-actions" aria-label="Primary">
+			</nav>
+		</header>
+
+		<section class="hero" aria-labelledby="intro-heading">
+			<div>
+				<h2 id="intro-heading">How our company started</h2>
+				<p class="p">We are a 10-person app studio that gets hired to build apps. Unlike solo marketplaces, we work as a coordinated team — product, design, engineering and QA — to deliver paid projects for clients.</p>
+			</div>
+			<div style="text-align:right">
+				<p class="p" style="margin-bottom:8px">We take client briefs, split work across our team, and ship reliable apps that classrooms and businesses use.</p>
+			</div>
+		</section>
+
+		<section id="history" class="timeline" aria-labelledby="history-heading">
+			<h3 id="history-heading" style="margin:0 0 12px">Timeline</h3>
+			<div class="timeline-list" role="list">
+				<!-- Founding -->
+				<article class="event" role="listitem" aria-labelledby="e1-title">
+					<div class="year">2019</div>
+					<div class="content">
+						<h4 id="e1-title" class="title">Founders collaborate</h4>
+						<p class="desc">A small group noticed the same problem popping up in classrooms and decided to build a solution together.</p>
+						<p class="more">They sketched ideas, validated basic flows with peers, and committed to a lightweight prototype to test real usage.</p>
+						<button class="toggle-btn" aria-expanded="false">Read more</button>
+					</div>
+				</article>
+
+				<!-- Prototype & testing -->
+				<article class="event" role="listitem" aria-labelledby="e2-title">
+					<div class="year">2020</div>
+					<div class="content">
+						<h4 id="e2-title" class="title">Prototype & testing</h4>
+						<p class="desc">An initial prototype was built and shared with a few teachers for feedback.</p>
+						<p class="more">Feedback highlighted the most valuable workflows and guided simple, high-impact improvements to usability and onboarding.</p>
+						<button class="toggle-btn" aria-expanded="false">Read more</button>
+					</div>
+				</article>
+
+				<!-- Beta & pilots -->
+				<article class="event" role="listitem" aria-labelledby="e3-title">
+					<div class="year">2023</div>
+					<div class="content">
+						<h4 id="e3-title" class="title">Beta & pilots</h4>
+						<p class="desc">We ran a closed beta with a handful of classrooms to validate the app in real lessons.</p>
+						<p class="more">Pilot teachers provided actionable feedback that improved lesson flows, reporting, and reliability ahead of a broader release.</p>
+						<button class="toggle-btn" aria-expanded="false">Read more</button>
+					</div>
+				</article>
+
+				<!-- Public launch / Today -->
+				<article class="event" role="listitem" aria-labelledby="e4-title">
+					<div class="year">2024</div>
+					<div class="content">
+						<h4 id="e4-title" class="title">Public launch / Today</h4>
+						<p class="desc">We launched a focused product aimed at classrooms and small organizations, emphasizing simplicity and support.</p>
+						<p class="more">Today the studio takes client-paid projects and continues iterating based on teacher and client needs — delivering apps as a coordinated team.</p>
+						<button class="toggle-btn" aria-expanded="false">Read more</button>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<!-- Team section -->
+		<section id="team" aria-labelledby="team-heading" style="margin-top:24px">
+			<h3 id="team-heading" style="margin:0 0 12px">Our team</h3>
+			<div style="display:flex;flex-wrap:wrap;gap:12px">
+				<!-- team members-->
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Jared, S.E. – President</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Shiela – Head manager</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Louie – Programmer 2</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Mark – Vice president</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Carl – Head IT 2</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Cristian – Programmer</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Angelo – Financial staff</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Achilles – Assistant 1</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Joseph – Assistant 2</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Sebastian – Head IT 1</span>
+			</div>
+		</section>
+
+		<footer style="margin-top:36px;color:var(--muted);font-size:13px">
+			<div style="display:flex;justify-content:space-between;align-items:center;">
+				<div>© <strong>Marks up</strong> — Built with care.</div>
+				<div style="opacity:.9">Made by GROUP 3 • STI • COMPROG 5/4</div>
+			</div>
+		</footer>
+	</div>
+
+	<script>
+		// Small helper: toggle long descriptions, update ARIA state, and add a click animation
+		(function(){
+			// attach handlers to buttons and events
+			document.querySelectorAll('.toggle-btn').forEach(function(btn){
+				btn.addEventListener('click', function(ev){
+					ev.stopPropagation();
+					var evRoot = btn.closest('.event');
+					toggleEvent(evRoot);
+				});
+			});
+			document.querySelectorAll('.event').forEach(function(ev){
+				ev.style.cursor = 'pointer';
+				ev.setAttribute('tabindex','0');
+
+				ev.addEventListener('click', function(){
+					toggleEvent(ev);
+				});
+				ev.addEventListener('keydown', function(e){
+					if(e.key === 'Enter' || e.key === ' ') {
+						e.preventDefault();
+						toggleEvent(ev);
+					}
+				});
+			});
+
+			function toggleEvent(ev) {
+				if(!ev) return;
+				var btn = ev.querySelector('.toggle-btn');
+				var content = ev.querySelector('.content');
+				var more = ev.querySelector('.more');
+				var desc = ev.querySelector('.desc');
+				var year = ev.querySelector('.year');
+
+				var expanding = !ev.classList.contains('expanded');
+				ev.classList.toggle('expanded');
+
+				// update button and aria
+				if(btn){
+					btn.setAttribute('aria-expanded', expanding ? 'true' : 'false');
+					btn.textContent = expanding ? 'Show less' : 'Read more';
+				}
+
+				// animate .desc (hidden unless expanded)
+				if(desc){
+					if(expanding){
+						desc.style.maxHeight = desc.scrollHeight + "px";
+						desc.style.opacity = "1";
+					} else {
+						desc.style.maxHeight = "0px";
+						desc.style.opacity = "0";
+					}
+				}
+
+				// handle animated max-height for .more
+				if(more){
+					if(expanding){
+						more.style.maxHeight = more.scrollHeight + "px";
+						more.style.opacity = "1";
+					} else {
+						more.style.maxHeight = "0px";
+						more.style.opacity = "0";
+					}
+				}
+
+				// quick pulse on content
+				if(content){
+					content.classList.remove('pulse');
+					void content.offsetWidth;
+					content.classList.add('pulse');
+					content.addEventListener('animationend', function handler(){
+						content.classList.remove('pulse');
+						content.removeEventListener('animationend', handler);
+					});
+				}
+
+				// year pop for emphasis
+				if(year && expanding){
+					year.classList.remove('pop');
+					void year.offsetWidth;
+					year.classList.add('pop');
+					year.addEventListener('animationend', function h(){ year.classList.remove('pop'); year.removeEventListener('animationend', h);});
+				}
+			}
+
+			// Reveal on scroll with slight stagger (apply to all events)
+			var items = Array.from(document.querySelectorAll('.timeline-list .event'));
+			if('IntersectionObserver' in window){
+				var io = new IntersectionObserver(function(entries){
+					entries.forEach(function(entry){
+						if(entry.isIntersecting){
+							var idx = items.indexOf(entry.target);
+							var delay = Math.min(200, idx * 70);
+							setTimeout(function(){ entry.target.classList.add('visible'); }, delay);
+							io.unobserve(entry.target);
+						}
+					});
+				},{threshold:0.12});
+				items.forEach(function(el){ io.observe(el); });
+			} else {
+				items.forEach(function(el){ el.classList.add('visible'); });
+			}
+
+			// On load: ensure already-expanded .more and .desc items have correct maxHeight
+			window.addEventListener('load', function(){
+				document.querySelectorAll('.event.expanded .more').forEach(function(m){
+					m.style.maxHeight = m.scrollHeight + 'px';
+					m.style.opacity = '1';
+				});
+				document.querySelectorAll('.event.expanded .desc').forEach(function(d){
+					d.style.maxHeight = d.scrollHeight + 'px';
+					d.style.opacity = '1';
+				});
+			});
+		})();
+	</script>
+</body>
+</html>
+	</script>
+</body>
+</html>
