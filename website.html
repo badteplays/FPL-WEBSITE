@@ -195,6 +195,12 @@
  			pointer-events: all;
  		}
 
+		/* enable background blur only when explicitly requested (for Contacts) */
+		.overlay.blur {
+			backdrop-filter: blur(6px);
+			-webkit-backdrop-filter: blur(6px);
+		}
+
 		/* utility: force hidden elements to be hidden */
 	.hidden { display: none !important; }
  
@@ -523,14 +529,15 @@
 		function showContact() {
 			if (offersSection) offersSection.classList.add('hidden');
 			if (contactSection) contactSection.classList.remove('hidden');
-			if (overlay) overlay.classList.add('active');
-			if (pageContainer) pageContainer.classList.add('blurred');
+			if (overlay) {
+				overlay.classList.add('active');
+				overlay.classList.add('blur');
+			}
 		}
 		function showOffers() {
 			if (contactSection) contactSection.classList.add('hidden');
 			if (offersSection) offersSection.classList.remove('hidden');
-			if (overlay) overlay.classList.add('active');
-			if (pageContainer) pageContainer.classList.add('blurred');
+			// do NOT blur or show overlay for offers; keep page interactive
 			// reveal cards staggered
 			setTimeout(function(){
 				var cards = document.querySelectorAll('.offer-card');
@@ -544,8 +551,10 @@
 		function closePanels() {
 			if (contactSection) contactSection.classList.add('hidden');
 			if (offersSection) offersSection.classList.add('hidden');
-			if (overlay) overlay.classList.remove('active');
-			if (pageContainer) pageContainer.classList.remove('blurred');
+			if (overlay) {
+				overlay.classList.remove('active');
+				overlay.classList.remove('blur');
+			}
 			var cards = document.querySelectorAll('.offer-card');
 			for (var i=0;i<cards.length;i++) cards[i].classList.remove('reveal');
 		}
