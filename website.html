@@ -130,11 +130,11 @@
 			background: var(--bg-1);
 			border: 1px solid rgba(255,255,255,0.1);
 			border-radius: var(--radius);
-			padding: 32px;
+			padding: 48px;
 			box-shadow: 0 20px 40px rgba(2,6,23,0.8);
 			z-index: 1000;
 			backdrop-filter: blur(12px);
-			width: min(90%, 400px);
+			width: min(90%, 500px);
 		}
 
 		.contact-content {
@@ -143,8 +143,9 @@
 		}
 
 		.contact-content h3 {
-			font-size: 24px;
-			margin: 0 0 20px 0;
+			font-size: 28px;
+			margin: 0 0 24px 0;
+			color: white;
 		}
 
 		.contact-items {
@@ -152,9 +153,16 @@
 		}
 
 		.contact-item {
-			margin: 16px 0;
+			margin: 20px 0;
 			color: var(--muted);
-			font-size: 15px;
+			font-size: 16px;
+			padding: 8px;
+			border-radius: 8px;
+			transition: background-color 0.2s;
+		}
+
+		.contact-item:hover {
+			background: rgba(255,255,255,0.05);
 		}
 
 		.overlay {
@@ -163,8 +171,9 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-			background: rgba(7,20,40,0.8);
-			backdrop-filter: blur(8px);
+			background: rgba(7,20,40,0.85);
+			backdrop-filter: blur(12px);
+			-webkit-backdrop-filter: blur(12px);
 			z-index: 999;
 			opacity: 0;
 			pointer-events: none;
@@ -259,6 +268,7 @@
 				</article>
 
 				
+				<!-- Fix the Beta & pilots event structure -->
 				<article class="event" role="listitem" aria-labelledby="e3-title">
 					<div class="year">2023</div>
 					<div class="content">
@@ -270,6 +280,7 @@
 				</article>
 
 				
+				<!-- Fix the Public launch event structure -->
 				<article class="event" role="listitem" aria-labelledby="e4-title">
 					<div class="year">2024</div>
 					<div class="content">
