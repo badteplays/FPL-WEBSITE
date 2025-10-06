@@ -516,15 +516,32 @@
 			const offersBtn = document.querySelector('.offers-btn');
 			const offersSection = document.querySelector('#offers');
 
-			// Contact button toggles contact panel and overlay
+			// ensure everything starts hidden (defensive - fixes auto-open)
+			document.addEventListener('DOMContentLoaded', function(){
+				if (contactSection) contactSection.classList.add('hidden');
+				if (offersSection) offersSection.classList.add('hidden');
+				if (overlay) overlay.classList.remove('active');
+				// remove any reveal state from offers cards
+				document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
+			});
+			// Contact button toggles contact panel and overlay (corrected logic)
 			contactBtn.addEventListener('click', (ev) => {
 				ev.stopPropagation();
-				const showing = !contactSection.classList.contains('hidden');
+				const isHidden = contactSection.classList.contains('hidden');
 				// hide offers if open
-				offersSection.classList.add('hidden');
-				document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
-				contactSection.classList.toggle('hidden', showing);
-				overlay.classList.toggle('active', !showing);
+				if (offersSection) {
+					offersSection.classList.add('hidden');
+					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
+				}
+				if (isHidden) {
+					// show contact
+					contactSection.classList.remove('hidden');
+					overlay.classList.add('active');
+				} else {
+					// hide contact
+					contactSection.classList.add('hidden');
+					overlay.classList.remove('active');
+				}
 			});
 
 			// Offers: animate overlay then scroll to offers and reveal cards
@@ -544,12 +561,12 @@
 				}, 220);
 			});
 
-			
+			// Overlay click closes both contact and offers
 			overlay.addEventListener('click', () => {
 				closePanels();
 			});
 
-			
+			// Escape closes panels
 			document.addEventListener('keydown', (e) => {
 				if (e.key === 'Escape') closePanels();
 			});
@@ -557,15 +574,16 @@
 			function closePanels(){
 				contactSection.classList.add('hidden');
 				overlay.classList.remove('active');
-
+				// hide offers and reset reveal state
 				if (offersSection) {
 					offersSection.classList.add('hidden');
 					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
 				}
 			}
 			
-			
+			// clicking outside specific panels will close them (but ignore overlay)
 			document.addEventListener('click', (e) => {
+				// if click is inside contact or offers or on their buttons, do nothing
 				if (contactSection.contains(e.target) || offersSection.contains(e.target) || contactBtn.contains(e.target) || offersBtn.contains(e.target) || e.target === overlay) return;
 				closePanels();
 			});
