@@ -194,9 +194,12 @@
  			opacity: 1;
  			pointer-events: all;
  		}
++
++		/* utility: force hidden elements to be hidden */
++		.hidden { display: none !important; }
  
-		/* blur only the page content when active (keeps modal/offers sharp) */
-		.container.blurred {
+ 		/* blur only the page content when active (keeps modal/offers sharp) */
+ 		.container.blurred {
 			filter: blur(6px);
 			transition: filter 260ms ease;
 			pointer-events: none; /* prevent interacting with blurred content */
@@ -264,7 +267,8 @@
 			</nav>
 		</header>
 
-		<div id="contact-section" class="contact-section hidden">
+		<!-- contact panel: ensure hidden by default using HTML hidden attribute -->
+		<div id="contact-section" class="contact-section hidden" hidden aria-hidden="true" style="display:none;">
 			<div class="contact-content">
 				<h3>Contact Information</h3>
 				<div class="contact-items">
@@ -283,9 +287,9 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- Offers section (targeted by Offers button) -->
-		<section id="offers" class="offers-section hidden" aria-labelledby="offers-heading">
+ 
+ 		<!-- Offers section (targeted by Offers button) -->
+		<section id="offers" class="offers-section hidden" hidden aria-labelledby="offers-heading" style="display:none;">
 			<h3 id="offers-heading" style="margin:0 0 12px">Offers</h3>
 			<div class="offers-grid">
 				<article class="offer-card" id="offer-startup" role="article">
@@ -524,82 +528,135 @@
 			const offersBtn = document.querySelector('.offers-btn');
 			const offersSection = document.querySelector('#offers');
 			const pageContainer = document.querySelector('.container');
+ 
+-			// ensure everything starts hidden and non-blurred (defensive)
+-			if (contactSection) { contactSection.classList.add('hidden'); contactSection.hidden = true; contactSection.style.display = 'none'; contactSection.setAttribute('aria-hidden','true'); }
+-			if (offersSection) { offersSection.classList.add('hidden'); offersSection.hidden = true; offersSection.style.display = 'none'; offersSection.setAttribute('aria-hidden','true'); }
++			// ensure everything starts hidden and non-blurred (defensive)
++			if (contactSection) {
++				contactSection.classList.add('hidden');
++				contactSection.hidden = true;
++				contactSection.style.display = 'none';
++				contactSection.setAttribute('aria-hidden','true');
++			}
++			if (offersSection) {
++				offersSection.classList.add('hidden');
++				offersSection.hidden = true;
++				offersSection.style.display = 'none';
++				offersSection.setAttribute('aria-hidden','true');
++			}
+ 			if (overlay) overlay.classList.remove('active');
+ 			if (pageContainer) pageContainer.classList.remove('blurred');
+ 			// remove any reveal state from offers cards
+ 			document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
 
-			// ensure everything starts hidden (immediate, not relying on DOMContentLoaded)
-			if (contactSection) contactSection.classList.add('hidden');
-			if (offersSection) offersSection.classList.add('hidden');
-			if (overlay) overlay.classList.remove('active');
-			if (pageContainer) pageContainer.classList.remove('blurred');
-			// remove any reveal state from offers cards
-			document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
-
-			// Contact button toggles contact panel and overlay (corrected logic)
-			contactBtn.addEventListener('click', (ev) => {
-				ev.stopPropagation();
-				const isHidden = contactSection.classList.contains('hidden');
-				// hide offers if open
-				if (offersSection) {
-					offersSection.classList.add('hidden');
-					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
-				}
-				if (isHidden) {
-					// show contact
-					contactSection.classList.remove('hidden');
-					overlay.classList.add('active');
-					pageContainer.classList.add('blurred');
-				} else {
-					// hide contact
-					contactSection.classList.add('hidden');
-					overlay.classList.remove('active');
-					pageContainer.classList.remove('blurred');
-				}
-			});
-
-			// Offers: animate overlay then scroll to offers and reveal cards
-			offersBtn.addEventListener('click', (ev) => {
-				ev.stopPropagation();
-				// hide contact if open
-				contactSection.classList.add('hidden');
-				overlay.classList.add('active');
-				pageContainer.classList.add('blurred');
-				// make offers section visible then scroll to it
-				offersSection.classList.remove('hidden');
-				// small delay so overlay becomes visible, then smooth scroll and reveal cards
-				setTimeout(() => {
-					offersSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-					// reveal cards staggered
-					const cards = Array.from(offersSection.querySelectorAll('.offer-card'));
-					cards.forEach((c, i) => setTimeout(() => c.classList.add('reveal'), i * 120));
-				}, 220);
-			});
-
-			// Overlay click closes both contact and offers
-			overlay.addEventListener('click', () => {
-				closePanels();
-			});
-
-			// Escape closes panels
-			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape') closePanels();
-			});
-
-			function closePanels(){
-				contactSection.classList.add('hidden');
-				overlay.classList.remove('active');
-				pageContainer.classList.remove('blurred');
-				// hide offers and reset reveal state
-				if (offersSection) {
-					offersSection.classList.add('hidden');
-					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
-				}
-			}
-			
-			// clicking outside specific panels will close them (but ignore overlay)
-			document.addEventListener('click', (e) => {
-				// if click is inside contact or offers or on their buttons, do nothing
-				if (contactSection.contains(e.target) || offersSection.contains(e.target) || contactBtn.contains(e.target) || offersBtn.contains(e.target) || e.target === overlay) return;
-				closePanels();
-			});
+ 			// Contact button toggles contact panel and overlay (corrected logic)
+  			contactBtn.addEventListener('click', (ev) => {
+  				ev.stopPropagation();
+-				const isHidden = contactSection.hidden || contactSection.classList.contains('hidden');
++				const isHidden = contactSection.hidden || contactSection.classList.contains('hidden');
+  				// hide offers if open
+  				if (offersSection) {
+-					offersSection.classList.add('hidden');
+-					offersSection.hidden = true;
+-					offersSection.style.display = 'none';
+-					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
++					offersSection.classList.add('hidden');
++					offersSection.hidden = true;
++					offersSection.style.display = 'none';
++					offersSection.setAttribute('aria-hidden','true');
++					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
+  				}
+  				if (isHidden) {
+  					// show contact
+  					contactSection.classList.remove('hidden');
+  					contactSection.hidden = false;
+  					contactSection.style.display = '';
+  					contactSection.removeAttribute('aria-hidden');
+  					overlay.classList.add('active');
+  					pageContainer.classList.add('blurred');
+  				} else {
+  					// hide contact
+  					contactSection.classList.add('hidden');
+  					contactSection.hidden = true;
+  					contactSection.style.display = 'none';
+  					contactSection.setAttribute('aria-hidden','true');
+  					overlay.classList.remove('active');
+  					pageContainer.classList.remove('blurred');
+  				}
+  			});
+ 
+ 			// Offers: animate overlay then scroll to offers and reveal cards
+ 			offersBtn.addEventListener('click', (ev) => {
+ 				ev.stopPropagation();
+ 				// hide contact if open
+-				contactSection.classList.add('hidden');
++				contactSection.classList.add('hidden');
++				contactSection.hidden = true;
++				contactSection.style.display = 'none';
++				contactSection.setAttribute('aria-hidden','true');
+ 				overlay.classList.add('active');
+ 				pageContainer.classList.add('blurred');
+ 				// make offers section visible then scroll to it
+-				offersSection.classList.remove('hidden');
++				offersSection.classList.remove('hidden');
++				offersSection.hidden = false;
++				offersSection.style.display = '';
++				offersSection.removeAttribute('aria-hidden');
+ 				// small delay so overlay becomes visible, then smooth scroll and reveal cards
+ 				setTimeout(() => {
+ 					offersSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+ 					// reveal cards staggered
+ 					const cards = Array.from(offersSection.querySelectorAll('.offer-card'));
+ 					cards.forEach((c, i) => setTimeout(() => c.classList.add('reveal'), i * 120));
+ 				}, 220);
+ 			});
+ 
+ 			// Overlay click closes both contact and offers
+ 			overlay.addEventListener('click', () => {
+ 				closePanels();
+ 			});
+ 
+ 			// Escape closes panels
+ 			document.addEventListener('keydown', (e) => {
+ 				if (e.key === 'Escape') closePanels();
+ 			});
+ 
+ 			function closePanels(){
+-				contactSection.classList.add('hidden');
+-				overlay.classList.remove('active');
+-				pageContainer.classList.remove('blurred');
+-				// hide offers and reset reveal state
+-				if (offersSection) {
+-					offersSection.classList.add('hidden');
+-					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
+-				}
++				// hide contact
++				if (contactSection) {
++					contactSection.classList.add('hidden');
++					contactSection.hidden = true;
++					contactSection.style.display = 'none';
++					contactSection.setAttribute('aria-hidden','true');
++				}
++				// hide offers and reset reveal state
++				if (offersSection) {
++					offersSection.classList.add('hidden');
++					offersSection.hidden = true;
++					offersSection.style.display = 'none';
++					offersSection.setAttribute('aria-hidden','true');
++					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
++				}
++				overlay.classList.remove('active');
++				pageContainer.classList.remove('blurred');
+ 			}
+ 			
+ 			// clicking outside specific panels will close them (but ignore overlay)
+ 			document.addEventListener('click', (e) => {
+ 				// if click is inside contact or offers or on their buttons, do nothing
+ 				if (contactSection.contains(e.target) || offersSection.contains(e.target) || contactBtn.contains(e.target) || offersBtn.contains(e.target) || e.target === overlay) return;
+ 				closePanels();
+ 			});
 	</script>
 </body>
 </html>
+
