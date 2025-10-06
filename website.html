@@ -95,7 +95,7 @@
 		}
 		.event.expanded .desc {
 			opacity: 1;
-			/* max-height will be set inline by JS to the element's scrollHeight */
+			
 		}
 		.event .more{
 			margin-top:10px;color:var(--muted);font-size:13px;
@@ -106,20 +106,56 @@
 
 		.toggle-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent);padding:7px 10px;border-radius:10px;cursor:pointer;font-weight:700}
 
-		/* micro interactions */
+		
 		.event:hover{ transform: translateY(-4px); box-shadow:0 14px 36px rgba(2,6,23,0.45); }
 		.event .title{transition: transform 240ms ease, color 240ms ease;}
 		.event:hover .title{ transform: translateX(4px); color: #ffffff; }
 
-		/* subtle accent glow on expand */
+		
 		.event.expanded{ outline: 1px solid rgba(96,165,250,0.06); box-shadow: 0 22px 50px rgba(96,165,250,0.07); }
 
-		/* small screens */
+	
 		@media (max-width:720px){
 			.hero{grid-template-columns:1fr}
 			.event{flex-direction:column;padding:12px}
 			.event:before{left:-22px;top:14px}
 			.timeline-list{padding-left:22px}
+		}
+
+		.contact-section {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: var(--bg-1);
+			border: 1px solid rgba(255,255,255,0.1);
+			border-radius: var(--radius);
+			padding: 24px;
+			box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+			z-index: 1000;
+			backdrop-filter: blur(12px);
+		}
+
+		.contact-content {
+			color: #fff;
+		}
+
+		.contact-items {
+			margin-top: 16px;
+		}
+
+		.contact-item {
+			margin: 12px 0;
+			color: var(--muted);
+		}
+
+		.contact-item strong {
+			color: #fff;
+			margin-right: 8px;
+		}
+
+		.hidden {
+			display: none;
 		}
 	</style>
 </head>
@@ -127,7 +163,7 @@
 	<div class="container">
 		<header>
 			<div class="brand">
-				<!-- small inline SVG logo for a modern look -->
+			
 				<div class="logo" aria-hidden="true" title="ArcaTech">
 					<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
 						<rect x="2" y="2" width="20" height="20" rx="5" fill="white" fill-opacity="0.06"/>
@@ -140,11 +176,32 @@
 				</div>
 			</div>
 			<nav class="header-actions" aria-label="Primary">
+				<button class="cta contact-btn">Contact Us</button>
 			</nav>
 		</header>
 
+		<div id="contact-section" class="contact-section hidden">
+			<div class="contact-content">
+				<h3>Contact Information</h3>
+				<div class="contact-items">
+					<div class="contact-item">
+						<strong>Email:</strong> contact@arcatech.com
+					</div>
+					<div class="contact-item">
+						<strong>Phone:</strong> +1 (555) 123-4567
+					</div>
+					<div class="contact-item">
+						<strong>Instagram:</strong> @arcatech
+					</div>
+					<div class="contact-item">
+						<strong>Facebook:</strong> ArcaTech Official
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<section class="hero" aria-labelledby="intro-heading">
-			<div>
+			<div></div>
 				<h2 id="intro-heading">How our company started</h2>
 				<p class="p">We are a 10-person app studio that gets hired to build apps. Unlike solo marketplaces, we work as a coordinated team — product, design, engineering and QA — to deliver paid projects for clients.</p>
 			</div>
@@ -156,7 +213,7 @@
 		<section id="history" class="timeline" aria-labelledby="history-heading">
 			<h3 id="history-heading" style="margin:0 0 12px">Timeline</h3>
 			<div class="timeline-list" role="list">
-				<!-- Founding -->
+				
 				<article class="event" role="listitem" aria-labelledby="e1-title">
 					<div class="year">2019</div>
 					<div class="content">
@@ -170,7 +227,7 @@
 				<!-- Prototype & testing -->
 				<article class="event" role="listitem" aria-labelledby="e2-title">
 					<div class="year">2020</div>
-					<div class="content">
+					<div class="content">	</div>
 						<h4 id="e2-title" class="title">Prototype & testing</h4>
 						<p class="desc">An initial prototype was built and shared with a few teachers for feedback.</p>
 						<p class="more">Feedback highlighted the most valuable workflows and guided simple, high-impact improvements to usability and onboarding.</p>
@@ -178,7 +235,7 @@
 					</div>
 				</article>
 
-				<!-- Beta & pilots -->
+				
 				<article class="event" role="listitem" aria-labelledby="e3-title">
 					<div class="year">2023</div>
 					<div class="content">
@@ -189,7 +246,7 @@
 					</div>
 				</article>
 
-				<!-- Public launch / Today -->
+				
 				<article class="event" role="listitem" aria-labelledby="e4-title">
 					<div class="year">2024</div>
 					<div class="content">
@@ -207,7 +264,7 @@
 			<h3 id="team-heading" style="margin:0 0 12px">Our team</h3>
 			<div style="display:flex;flex-wrap:wrap;gap:12px">
 				<!-- team members-->
-				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Jared – President</span>
+				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Jared, S.E. – President</span>
 				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Shiela – Head manager</span>
 				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Louie – Programmer 2</span>
 				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Mark – Vice president</span>
@@ -229,7 +286,7 @@
 	</div>
 
 	<script>
-		// Small helper: toggle long descriptions, update ARIA state, and add a click animation
+	
 		(function(){
 			// attach handlers to buttons and events
 			document.querySelectorAll('.toggle-btn').forEach(function(btn){
@@ -265,13 +322,13 @@
 				var expanding = !ev.classList.contains('expanded');
 				ev.classList.toggle('expanded');
 
-				// update button and aria
+				
 				if(btn){
 					btn.setAttribute('aria-expanded', expanding ? 'true' : 'false');
 					btn.textContent = expanding ? 'Show less' : 'Read more';
 				}
 
-				// animate .desc (hidden unless expanded)
+			
 				if(desc){
 					if(expanding){
 						desc.style.maxHeight = desc.scrollHeight + "px";
@@ -282,7 +339,7 @@
 					}
 				}
 
-				// handle animated max-height for .more
+		
 				if(more){
 					if(expanding){
 						more.style.maxHeight = more.scrollHeight + "px";
@@ -313,7 +370,7 @@
 				}
 			}
 
-			// Reveal on scroll with slight stagger (apply to all events)
+	
 			var items = Array.from(document.querySelectorAll('.timeline-list .event'));
 			if('IntersectionObserver' in window){
 				var io = new IntersectionObserver(function(entries){
@@ -331,8 +388,7 @@
 				items.forEach(function(el){ el.classList.add('visible'); });
 			}
 
-			// On load: ensure already-expanded .more and .desc items have correct maxHeight
-			window.addEventListener('load', function(){
+			
 				document.querySelectorAll('.event.expanded .more').forEach(function(m){
 					m.style.maxHeight = m.scrollHeight + 'px';
 					m.style.opacity = '1';
@@ -341,13 +397,20 @@
 					d.style.maxHeight = d.scrollHeight + 'px';
 					d.style.opacity = '1';
 				});
+			})(); 
+
+			const contactBtn = document.querySelector('.contact-btn');
+			const contactSection = document.querySelector('#contact-section');
+
+			contactBtn.addEventListener('click', () => {
+				contactSection.classList.toggle('hidden');
 			});
-		})();
+
+			document.addEventListener('click', (e) => {
+				if (!contactSection.contains(e.target) && !contactBtn.contains(e.target)) {
+					contactSection.classList.add('hidden');
+				}
+			});
 	</script>
 </body>
 </html>
-	</script>
-</body>
-</html>
-
-
