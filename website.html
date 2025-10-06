@@ -195,8 +195,41 @@
 			pointer-events: all;
 		}
 
-		.hidden {
-			display: none;
+		/* Offers section & animations */
+		.offers-section {
+			margin-top: 28px;
+			padding: 22px;
+			border-radius: 12px;
+			background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+			border: 1px solid rgba(255,255,255,0.03);
+			box-shadow: 0 12px 30px rgba(2,6,23,0.35);
+		}
+		.offers-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 12px;
+		}
+		.offer-card {
+			background: rgba(255,255,255,0.02);
+			padding: 14px;
+			border-radius: 10px;
+			color: var(--muted);
+			transform: translateY(10px) scale(.995);
+			opacity: 0;
+			transition: transform 360ms cubic-bezier(.2,.9,.2,1), opacity 320ms ease;
+			border: 1px solid rgba(255,255,255,0.02);
+		}
+		.offer-card h4 { margin: 0 0 8px; color: #fff; font-size:16px; }
+		.offer-card ul { margin: 8px 0 0; padding-left:18px; color:var(--muted); font-size:13px; }
+		.offer-card.reveal { transform: translateY(0) scale(1); opacity: 1; }
+
+		/* Responsive */
+		@media (max-width:900px){
+			.offers-grid{ grid-template-columns: repeat(2, 1fr); }
+		}
+		@media (max-width:600px){
+			.hero{ grid-template-columns: 1fr; }
+			.offers-grid{ grid-template-columns: 1fr; }
 		}
 	</style>
 </head>
@@ -218,6 +251,7 @@
 				</div>
 			</div>
 			<nav class="header-actions" aria-label="Primary">
+				<button class="cta offers-btn" type="button">Offers</button>
 				<button class="cta contact-btn">Contact Us</button>
 			</nav>
 		</header>
@@ -241,6 +275,39 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Offers section (targeted by Offers button) -->
+		<section id="offers" class="offers-section hidden" aria-labelledby="offers-heading">
+			<h3 id="offers-heading" style="margin:0 0 12px">Offers</h3>
+			<div class="offers-grid">
+				<article class="offer-card" id="offer-startup" role="article">
+					<h4>Startup Website Package</h4>
+					<p style="margin:0;color:var(--muted)">Ideal for small businesses or new ventures.</p>
+					<ul>
+						<li>5-page responsive website</li>
+						<li>Basic SEO setup</li>
+						<li>2 rounds of revisions</li>
+					</ul>
+				</article>
+				<article class="offer-card" id="offer-business" role="article">
+					<h4>Business Web App Package</h4>
+					<p style="margin:0;color:var(--muted)"></p>
+					<ul>
+						<li>Custom web application (e.g., CRM, booking system)</li>
+						<li>API integration</li>
+						<li>Admin dashboard</li>
+					</ul>
+				</article>
+				<article class="offer-card" id="offer-enterprise" role="article">
+					<h4>Enterprise Solution</h4>
+					<p style="margin:0;color:var(--muted)"></p>
+					<ul>
+						<li>Fully custom solution (quote-based)</li>
+						<li>Includes discovery workshop, UX/UI design, DevOps support</li>
+					</ul>
+				</article>
+			</div>
+		</section>
 
 		<section class="hero" aria-labelledby="intro-heading">
 			<div>
@@ -446,17 +513,61 @@
 			const contactBtn = document.querySelector('.contact-btn');
 			const contactSection = document.querySelector('#contact-section');
 			const overlay = document.querySelector('#overlay');
+			const offersBtn = document.querySelector('.offers-btn');
+			const offersSection = document.querySelector('#offers');
 
-			contactBtn.addEventListener('click', () => {
-				contactSection.classList.toggle('hidden');
-				overlay.classList.toggle('active');
+			// Contact button toggles contact panel and overlay
+			contactBtn.addEventListener('click', (ev) => {
+				ev.stopPropagation();
+				const showing = !contactSection.classList.contains('hidden');
+				// hide offers if open
+				offersSection.classList.add('hidden');
+				document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
+				contactSection.classList.toggle('hidden', showing);
+				overlay.classList.toggle('active', !showing);
 			});
 
-			document.addEventListener('click', (e) => {
-				if (!contactSection.contains(e.target) && !contactBtn.contains(e.target)) {
-					contactSection.classList.add('hidden');
-					overlay.classList.remove('active');
+			// Offers: animate overlay then scroll to offers and reveal cards
+			offersBtn.addEventListener('click', (ev) => {
+				ev.stopPropagation();
+				// hide contact if open
+				contactSection.classList.add('hidden');
+				overlay.classList.add('active');
+				// make offers section visible then scroll to it
+				offersSection.classList.remove('hidden');
+				// small delay so overlay becomes visible, then smooth scroll and reveal cards
+				setTimeout(() => {
+					offersSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					// reveal cards staggered
+					const cards = Array.from(offersSection.querySelectorAll('.offer-card'));
+					cards.forEach((c, i) => setTimeout(() => c.classList.add('reveal'), i * 120));
+				}, 220);
+			});
+
+			
+			overlay.addEventListener('click', () => {
+				closePanels();
+			});
+
+			
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape') closePanels();
+			});
+
+			function closePanels(){
+				contactSection.classList.add('hidden');
+				overlay.classList.remove('active');
+
+				if (offersSection) {
+					offersSection.classList.add('hidden');
+					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
 				}
+			}
+			
+			
+			document.addEventListener('click', (e) => {
+				if (contactSection.contains(e.target) || offersSection.contains(e.target) || contactBtn.contains(e.target) || offersBtn.contains(e.target) || e.target === overlay) return;
+				closePanels();
 			});
 	</script>
 </body>
