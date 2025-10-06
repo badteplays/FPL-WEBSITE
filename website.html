@@ -50,14 +50,14 @@
 			background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
 			padding:26px;border-radius:var(--radius);margin-bottom:22px;
 			backdrop-filter: blur(8px);
-			/* keep two columns but make the right column a fixed/auto width so left text stays left */
+			
 			display:grid;
 			grid-template-columns: 1fr 300px;
 			gap:20px;align-items:center;
 			box-shadow: 0 10px 30px rgba(2,6,23,0.45);
 			border: 1px solid rgba(255,255,255,0.03);
 		}
-		/* ensure content in the left column is left-aligned */
+		
 		.hero > div:first-child { text-align: left; }
 		.cta{
 			background:linear-gradient(90deg,var(--accent),var(--accent-2));
@@ -66,7 +66,7 @@
 		}
 		.p{color:var(--muted);margin:8px 0 0;font-size:14px}
 
-		/* Timeline */
+
 		.timeline{margin-top:20px}
 		.timeline-list{position:relative;padding-left:36px}
 		.timeline-list:before{
@@ -88,9 +88,9 @@
 		}
 		.event .year{font-weight:700;color:var(--accent);min-width:62px;font-size:14px}
 		.event .content{flex:1}
-		/* make content stack vertically so button sits under text */
+		
 		.event .content{ display:flex; flex-direction:column; }
-		/* ensure toggle button sits below content, aligned to start */
+		
 		.toggle-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent);padding:7px 10px;border-radius:10px;cursor:pointer;font-weight:700; align-self:flex-start; margin-top:12px }
 		
 		.event .title{margin:0;font-size:16px;font-weight:600}
@@ -195,24 +195,24 @@
  			pointer-events: all;
  		}
 
-		/* enable background blur only when explicitly requested (for Contacts) */
+
 		.overlay.blur {
 			backdrop-filter: blur(6px);
 			-webkit-backdrop-filter: blur(6px);
 		}
 
-		/* utility: force hidden elements to be hidden */
+		
 	.hidden { display: none !important; }
  
- 		/* blur only the page content when active (keeps modal/offers sharp) */
+ 	
  		.container.blurred {
 			filter: blur(6px);
 			transition: filter 260ms ease;
-			pointer-events: none; /* prevent interacting with blurred content */
+			pointer-events: none; 
 			user-select: none;
 		}
 
-		/* Offers section & animations */
+	
 		.offers-section {
 			margin-top: 28px;
 			padding: 22px;
@@ -240,7 +240,7 @@
 		.offer-card ul { margin: 8px 0 0; padding-left:18px; color:var(--muted); font-size:13px; }
 		.offer-card.reveal { transform: translateY(0) scale(1); opacity: 1; }
 
-		/* Responsive */
+	
 		@media (max-width:900px){
 			.offers-grid{ grid-template-columns: repeat(2, 1fr); }
 		}
@@ -273,7 +273,7 @@
 			</nav>
 		</header>
 
-		<!-- contact panel: rely on .hidden class only (remove hidden attribute and inline style) -->
+	
 		<div id="contact-section" class="contact-section hidden" aria-hidden="true">
 			<div class="contact-content">
 				<h3>Contact Information</h3>
@@ -294,7 +294,7 @@
 			</div>
 		</div>
  
- 		<!-- Offers section (targeted by Offers button) -->
+ 
 		<section id="offers" class="offers-section hidden" aria-labelledby="offers-heading">
 			<h3 id="offers-heading" style="margin:0 0 12px">Offers</h3>
 			<div class="offers-grid">
@@ -351,7 +351,7 @@
 					</div>
 				</article>
 
-				<!-- Prototype & testing -->
+	
 				<article class="event" role="listitem" aria-labelledby="e2-title">
 					<div class="year">2020</div>
 					<div class="content">
@@ -362,8 +362,7 @@
 					</div>
 				</article>
 
-				
-				<!-- Fix the Beta & pilots event structure -->
+
 				<article class="event" role="listitem" aria-labelledby="e3-title">
 					<div class="year">2023</div>
 					<div class="content">
@@ -375,7 +374,7 @@
 				</article>
 
 				
-				<!-- Fix the Public launch event structure -->
+			
 				<article class="event" role="listitem" aria-labelledby="e4-title">
 					<div class="year">2024</div>
 					<div class="content">
@@ -388,11 +387,11 @@
 			</div>
 		</section>
 
-		<!-- Team section -->
+
 		<section id="team" aria-labelledby="team-heading" style="margin-top:24px">
 			<h3 id="team-heading" style="margin:0 0 12px">Our team</h3>
 			<div style="display:flex;flex-wrap:wrap;gap:12px">
-				<!-- team members-->
+
 				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Jared, S.E. – President</span>
 				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Shiela – Head manager</span>
 				<span style="background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-size:13px">Louie – Programmer 2</span>
@@ -416,7 +415,7 @@
 
 	<script>
 	document.addEventListener('DOMContentLoaded', function () {
-		// helper: closest polyfill fallback
+	
 		function closest(el, selector) {
 			if (!el) return null;
 			if (el.closest) return el.closest(selector);
@@ -428,7 +427,7 @@
 			return null;
 		}
 
-		// elements
+
 		var contactBtn = document.querySelector('.contact-btn');
 		var contactSection = document.querySelector('#contact-section');
 		var offersBtn = document.querySelector('.offers-btn');
@@ -436,7 +435,7 @@
 		var overlay = document.querySelector('#overlay');
 		var pageContainer = document.querySelector('.container');
 
-		// timeline toggles
+
 		var toggleBtns = document.querySelectorAll('.toggle-btn');
 		for (var i = 0; i < toggleBtns.length; i++) {
 			(function(btn){
@@ -499,7 +498,7 @@
 			}
 
 			if (content) {
-				// simple pulse: add/remove a class if defined in CSS
+			
 				content.classList.remove('pulse');
 				void content.offsetWidth;
 				content.classList.add('pulse');
@@ -517,7 +516,6 @@
 			}
 		}
 
-		// ensure hidden state on start (rely on .hidden class)
 		if (contactSection) contactSection.classList.add('hidden');
 		if (offersSection) offersSection.classList.add('hidden');
 		if (overlay) overlay.classList.remove('active');
@@ -525,7 +523,7 @@
 		var offerCards = document.querySelectorAll('.offer-card');
 		for (var k=0;k<offerCards.length;k++) offerCards[k].classList.remove('reveal');
 
-		// show/hide helpers
+	
 		function showContact() {
 			if (offersSection) offersSection.classList.add('hidden');
 			if (contactSection) contactSection.classList.remove('hidden');
@@ -559,7 +557,7 @@
 			for (var i=0;i<cards.length;i++) cards[i].classList.remove('reveal');
 		}
 
-		// bind contact/offers toggles (guard for missing elements)
+		
 		if (contactBtn) {
 			contactBtn.addEventListener('click', function (ev) {
 				ev.stopPropagation();
@@ -570,7 +568,7 @@
 			offersBtn.addEventListener('click', function (ev) {
 				ev.stopPropagation();
 				showOffers();
-				// scroll into view if offers present
+				
 				if (offersSection) {
 					setTimeout(function(){ try { offersSection.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(e){ /* ignore */ } }, 240);
 				}
@@ -578,7 +576,7 @@
 		}
 		if (overlay) overlay.addEventListener('click', function(){ closePanels(); });
 
-		// Escape and outside click close panels
+
 		document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanels(); });
 		document.addEventListener('click', function (e) {
 			var insideContact = contactSection && contactSection.contains(e.target);
@@ -592,3 +590,4 @@
 	</script>
 </body>
 </html>
+
