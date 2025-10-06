@@ -181,18 +181,26 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-			background: rgba(7,20,40,0.85);
-			backdrop-filter: blur(12px);
-			-webkit-backdrop-filter: blur(12px);
-			z-index: 999;
-			opacity: 0;
-			pointer-events: none;
-			transition: opacity 0.3s ease;
-		}
-
-		.overlay.active {
-			opacity: 1;
-			pointer-events: all;
+			background: rgba(7,20,40,0.45); /* lighter dim, no page-blur here */
+			/* remove backdrop-filter from overlay to avoid blurring modal contents */
+			/* page blur handled by .container.blurred */
+ 			z-index: 999;
+ 			opacity: 0;
+ 			pointer-events: none;
+ 			transition: opacity 0.3s ease;
+ 		}
+ 
+ 		.overlay.active {
+ 			opacity: 1;
+ 			pointer-events: all;
+ 		}
+ 
+		/* blur only the page content when active (keeps modal/offers sharp) */
+		.container.blurred {
+			filter: blur(6px);
+			transition: filter 260ms ease;
+			pointer-events: none; /* prevent interacting with blurred content */
+			user-select: none;
 		}
 
 		/* Offers section & animations */
@@ -515,15 +523,16 @@
 			const overlay = document.querySelector('#overlay');
 			const offersBtn = document.querySelector('.offers-btn');
 			const offersSection = document.querySelector('#offers');
+			const pageContainer = document.querySelector('.container');
 
-			// ensure everything starts hidden (defensive - fixes auto-open)
-			document.addEventListener('DOMContentLoaded', function(){
-				if (contactSection) contactSection.classList.add('hidden');
-				if (offersSection) offersSection.classList.add('hidden');
-				if (overlay) overlay.classList.remove('active');
-				// remove any reveal state from offers cards
-				document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
-			});
+			// ensure everything starts hidden (immediate, not relying on DOMContentLoaded)
+			if (contactSection) contactSection.classList.add('hidden');
+			if (offersSection) offersSection.classList.add('hidden');
+			if (overlay) overlay.classList.remove('active');
+			if (pageContainer) pageContainer.classList.remove('blurred');
+			// remove any reveal state from offers cards
+			document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
+
 			// Contact button toggles contact panel and overlay (corrected logic)
 			contactBtn.addEventListener('click', (ev) => {
 				ev.stopPropagation();
@@ -537,10 +546,12 @@
 					// show contact
 					contactSection.classList.remove('hidden');
 					overlay.classList.add('active');
+					pageContainer.classList.add('blurred');
 				} else {
 					// hide contact
 					contactSection.classList.add('hidden');
 					overlay.classList.remove('active');
+					pageContainer.classList.remove('blurred');
 				}
 			});
 
@@ -550,6 +561,7 @@
 				// hide contact if open
 				contactSection.classList.add('hidden');
 				overlay.classList.add('active');
+				pageContainer.classList.add('blurred');
 				// make offers section visible then scroll to it
 				offersSection.classList.remove('hidden');
 				// small delay so overlay becomes visible, then smooth scroll and reveal cards
@@ -574,6 +586,7 @@
 			function closePanels(){
 				contactSection.classList.add('hidden');
 				overlay.classList.remove('active');
+				pageContainer.classList.remove('blurred');
 				// hide offers and reset reveal state
 				if (offersSection) {
 					offersSection.classList.add('hidden');
