@@ -194,9 +194,9 @@
  			opacity: 1;
  			pointer-events: all;
  		}
-+
-+		/* utility: force hidden elements to be hidden */
-+		.hidden { display: none !important; }
+
+		/* utility: force hidden elements to be hidden */
+	.hidden { display: none !important; }
  
  		/* blur only the page content when active (keeps modal/offers sharp) */
  		.container.blurred {
@@ -267,8 +267,8 @@
 			</nav>
 		</header>
 
-		<!-- contact panel: ensure hidden by default using HTML hidden attribute -->
-		<div id="contact-section" class="contact-section hidden" hidden aria-hidden="true" style="display:none;">
+		<!-- contact panel: rely on .hidden class only (remove hidden attribute and inline style) -->
+		<div id="contact-section" class="contact-section hidden" aria-hidden="true">
 			<div class="contact-content">
 				<h3>Contact Information</h3>
 				<div class="contact-items">
@@ -289,7 +289,7 @@
 		</div>
  
  		<!-- Offers section (targeted by Offers button) -->
-		<section id="offers" class="offers-section hidden" hidden aria-labelledby="offers-heading" style="display:none;">
+		<section id="offers" class="offers-section hidden" aria-labelledby="offers-heading">
 			<h3 id="offers-heading" style="margin:0 0 12px">Offers</h3>
 			<div class="offers-grid">
 				<article class="offer-card" id="offer-startup" role="article">
@@ -409,254 +409,177 @@
 	</div>
 
 	<script>
-	
-		(function(){
-			// attach handlers to buttons and events
-			document.querySelectorAll('.toggle-btn').forEach(function(btn){
-				btn.addEventListener('click', function(ev){
+	document.addEventListener('DOMContentLoaded', function () {
+		// helper: closest polyfill fallback
+		function closest(el, selector) {
+			if (!el) return null;
+			if (el.closest) return el.closest(selector);
+			while (el && el !== document) {
+				if (el.matches && el.matches(selector)) return el;
+				if (el.classList && el.classList.contains(selector.replace(/^\./, ''))) return el;
+				el = el.parentNode;
+			}
+			return null;
+		}
+
+		// elements
+		var contactBtn = document.querySelector('.contact-btn');
+		var contactSection = document.querySelector('#contact-section');
+		var offersBtn = document.querySelector('.offers-btn');
+		var offersSection = document.querySelector('#offers');
+		var overlay = document.querySelector('#overlay');
+		var pageContainer = document.querySelector('.container');
+
+		// timeline toggles
+		var toggleBtns = document.querySelectorAll('.toggle-btn');
+		for (var i = 0; i < toggleBtns.length; i++) {
+			(function(btn){
+				btn.addEventListener('click', function (ev) {
 					ev.stopPropagation();
-					var evRoot = btn.closest('.event');
+					var evRoot = closest(btn, '.event') || btn.parentNode;
 					toggleEvent(evRoot);
 				});
-			});
-			document.querySelectorAll('.event').forEach(function(ev){
+			})(toggleBtns[i]);
+		}
+
+		var events = document.querySelectorAll('.event');
+		for (var j = 0; j < events.length; j++) {
+			(function(ev){
 				ev.style.cursor = 'pointer';
 				ev.setAttribute('tabindex','0');
-
-				ev.addEventListener('click', function(){
-					toggleEvent(ev);
-				});
-				ev.addEventListener('keydown', function(e){
-					if(e.key === 'Enter' || e.key === ' ') {
+				ev.addEventListener('click', function () { toggleEvent(ev); });
+				ev.addEventListener('keydown', function (e) {
+					if (e.key === 'Enter' || e.key === ' ') {
 						e.preventDefault();
 						toggleEvent(ev);
 					}
 				});
-			});
+			})(events[j]);
+		}
 
-			function toggleEvent(ev) {
-				if(!ev) return;
-				var btn = ev.querySelector('.toggle-btn');
-				var content = ev.querySelector('.content');
-				var more = ev.querySelector('.more');
-				var desc = ev.querySelector('.desc');
-				var year = ev.querySelector('.year');
+		function toggleEvent(ev) {
+			if (!ev) return;
+			var btn = ev.querySelector('.toggle-btn');
+			var content = ev.querySelector('.content');
+			var more = ev.querySelector('.more');
+			var desc = ev.querySelector('.desc');
+			var year = ev.querySelector('.year');
 
-				var expanding = !ev.classList.contains('expanded');
-				ev.classList.toggle('expanded');
+			var expanding = !ev.classList.contains('expanded');
+			if (expanding) ev.classList.add('expanded'); else ev.classList.remove('expanded');
 
-				
-				if(btn){
-					btn.setAttribute('aria-expanded', expanding ? 'true' : 'false');
-					btn.textContent = expanding ? 'Show less' : 'Read more';
+			if (btn) {
+				btn.setAttribute('aria-expanded', expanding ? 'true' : 'false');
+				btn.textContent = expanding ? 'Show less' : 'Read more';
+			}
+
+			if (desc) {
+				if (expanding) {
+					desc.style.maxHeight = desc.scrollHeight + "px";
+					desc.style.opacity = "1";
+				} else {
+					desc.style.maxHeight = "0px";
+					desc.style.opacity = "0";
 				}
-
-			
-				if(desc){
-					if(expanding){
-						desc.style.maxHeight = desc.scrollHeight + "px";
-						desc.style.opacity = "1";
-					} else {
-						desc.style.maxHeight = "0px";
-						desc.style.opacity = "0";
-					}
+			}
+			if (more) {
+				if (expanding) {
+					more.style.maxHeight = more.scrollHeight + "px";
+					more.style.opacity = "1";
+				} else {
+					more.style.maxHeight = "0px";
+					more.style.opacity = "0";
 				}
+			}
 
-		
-				if(more){
-					if(expanding){
-						more.style.maxHeight = more.scrollHeight + "px";
-						more.style.opacity = "1";
-					} else {
-						more.style.maxHeight = "0px";
-						more.style.opacity = "0";
-					}
-				}
-
-				// quick pulse on content
-				if(content){
+			if (content) {
+				// simple pulse: add/remove a class if defined in CSS
+				content.classList.remove('pulse');
+				void content.offsetWidth;
+				content.classList.add('pulse');
+				content.addEventListener('animationend', function handler() {
 					content.classList.remove('pulse');
-					void content.offsetWidth;
-					content.classList.add('pulse');
-					content.addEventListener('animationend', function handler(){
-						content.classList.remove('pulse');
-						content.removeEventListener('animationend', handler);
-					});
-				}
-
-				// year pop for emphasis
-				if(year && expanding){
-					year.classList.remove('pop');
-					void year.offsetWidth;
-					year.classList.add('pop');
-					year.addEventListener('animationend', function h(){ year.classList.remove('pop'); year.removeEventListener('animationend', h);});
-				}
+					content.removeEventListener('animationend', handler);
+				});
 			}
 
-	
-			var items = Array.from(document.querySelectorAll('.timeline-list .event'));
-			if('IntersectionObserver' in window){
-				var io = new IntersectionObserver(function(entries){
-					entries.forEach(function(entry){
-						if(entry.isIntersecting){
-							var idx = items.indexOf(entry.target);
-							var delay = Math.min(200, idx * 70);
-							setTimeout(function(){ entry.target.classList.add('visible'); }, delay);
-							io.unobserve(entry.target);
-						}
-					});
-				},{threshold:0.12});
-				items.forEach(function(el){ io.observe(el); });
-			} else {
-				items.forEach(function(el){ el.classList.add('visible'); });
+			if (year && expanding) {
+				year.classList.remove('pop');
+				void year.offsetWidth;
+				year.classList.add('pop');
+				year.addEventListener('animationend', function h(){ year.classList.remove('pop'); year.removeEventListener('animationend', h);});
 			}
+		}
 
-			
-				document.querySelectorAll('.event.expanded .more').forEach(function(m){
-					m.style.maxHeight = m.scrollHeight + 'px';
-					m.style.opacity = '1';
-				});
-				document.querySelectorAll('.event.expanded .desc').forEach(function(d){
-					d.style.maxHeight = d.scrollHeight + 'px';
-					d.style.opacity = '1';
-				});
-			})(); 
+		// ensure hidden state on start (rely on .hidden class)
+		if (contactSection) contactSection.classList.add('hidden');
+		if (offersSection) offersSection.classList.add('hidden');
+		if (overlay) overlay.classList.remove('active');
+		if (pageContainer) pageContainer.classList.remove('blurred');
+		var offerCards = document.querySelectorAll('.offer-card');
+		for (var k=0;k<offerCards.length;k++) offerCards[k].classList.remove('reveal');
 
-			const contactBtn = document.querySelector('.contact-btn');
-			const contactSection = document.querySelector('#contact-section');
-			const overlay = document.querySelector('#overlay');
-			const offersBtn = document.querySelector('.offers-btn');
-			const offersSection = document.querySelector('#offers');
-			const pageContainer = document.querySelector('.container');
- 
--			// ensure everything starts hidden and non-blurred (defensive)
--			if (contactSection) { contactSection.classList.add('hidden'); contactSection.hidden = true; contactSection.style.display = 'none'; contactSection.setAttribute('aria-hidden','true'); }
--			if (offersSection) { offersSection.classList.add('hidden'); offersSection.hidden = true; offersSection.style.display = 'none'; offersSection.setAttribute('aria-hidden','true'); }
-+			// ensure everything starts hidden and non-blurred (defensive)
-+			if (contactSection) {
-+				contactSection.classList.add('hidden');
-+				contactSection.hidden = true;
-+				contactSection.style.display = 'none';
-+				contactSection.setAttribute('aria-hidden','true');
-+			}
-+			if (offersSection) {
-+				offersSection.classList.add('hidden');
-+				offersSection.hidden = true;
-+				offersSection.style.display = 'none';
-+				offersSection.setAttribute('aria-hidden','true');
-+			}
- 			if (overlay) overlay.classList.remove('active');
- 			if (pageContainer) pageContainer.classList.remove('blurred');
- 			// remove any reveal state from offers cards
- 			document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
+		// show/hide helpers
+		function showContact() {
+			if (offersSection) offersSection.classList.add('hidden');
+			if (contactSection) contactSection.classList.remove('hidden');
+			if (overlay) overlay.classList.add('active');
+			if (pageContainer) pageContainer.classList.add('blurred');
+		}
+		function showOffers() {
+			if (contactSection) contactSection.classList.add('hidden');
+			if (offersSection) offersSection.classList.remove('hidden');
+			if (overlay) overlay.classList.add('active');
+			if (pageContainer) pageContainer.classList.add('blurred');
+			// reveal cards staggered
+			setTimeout(function(){
+				var cards = document.querySelectorAll('.offer-card');
+				for (var i=0;i<cards.length;i++){
+					(function(c, idx){
+						setTimeout(function(){ c.classList.add('reveal'); }, idx * 120);
+					})(cards[i], i);
+				}
+			}, 220);
+		}
+		function closePanels() {
+			if (contactSection) contactSection.classList.add('hidden');
+			if (offersSection) offersSection.classList.add('hidden');
+			if (overlay) overlay.classList.remove('active');
+			if (pageContainer) pageContainer.classList.remove('blurred');
+			var cards = document.querySelectorAll('.offer-card');
+			for (var i=0;i<cards.length;i++) cards[i].classList.remove('reveal');
+		}
 
- 			// Contact button toggles contact panel and overlay (corrected logic)
-  			contactBtn.addEventListener('click', (ev) => {
-  				ev.stopPropagation();
--				const isHidden = contactSection.hidden || contactSection.classList.contains('hidden');
-+				const isHidden = contactSection.hidden || contactSection.classList.contains('hidden');
-  				// hide offers if open
-  				if (offersSection) {
--					offersSection.classList.add('hidden');
--					offersSection.hidden = true;
--					offersSection.style.display = 'none';
--					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
-+					offersSection.classList.add('hidden');
-+					offersSection.hidden = true;
-+					offersSection.style.display = 'none';
-+					offersSection.setAttribute('aria-hidden','true');
-+					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
-  				}
-  				if (isHidden) {
-  					// show contact
-  					contactSection.classList.remove('hidden');
-  					contactSection.hidden = false;
-  					contactSection.style.display = '';
-  					contactSection.removeAttribute('aria-hidden');
-  					overlay.classList.add('active');
-  					pageContainer.classList.add('blurred');
-  				} else {
-  					// hide contact
-  					contactSection.classList.add('hidden');
-  					contactSection.hidden = true;
-  					contactSection.style.display = 'none';
-  					contactSection.setAttribute('aria-hidden','true');
-  					overlay.classList.remove('active');
-  					pageContainer.classList.remove('blurred');
-  				}
-  			});
- 
- 			// Offers: animate overlay then scroll to offers and reveal cards
- 			offersBtn.addEventListener('click', (ev) => {
- 				ev.stopPropagation();
- 				// hide contact if open
--				contactSection.classList.add('hidden');
-+				contactSection.classList.add('hidden');
-+				contactSection.hidden = true;
-+				contactSection.style.display = 'none';
-+				contactSection.setAttribute('aria-hidden','true');
- 				overlay.classList.add('active');
- 				pageContainer.classList.add('blurred');
- 				// make offers section visible then scroll to it
--				offersSection.classList.remove('hidden');
-+				offersSection.classList.remove('hidden');
-+				offersSection.hidden = false;
-+				offersSection.style.display = '';
-+				offersSection.removeAttribute('aria-hidden');
- 				// small delay so overlay becomes visible, then smooth scroll and reveal cards
- 				setTimeout(() => {
- 					offersSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
- 					// reveal cards staggered
- 					const cards = Array.from(offersSection.querySelectorAll('.offer-card'));
- 					cards.forEach((c, i) => setTimeout(() => c.classList.add('reveal'), i * 120));
- 				}, 220);
- 			});
- 
- 			// Overlay click closes both contact and offers
- 			overlay.addEventListener('click', () => {
- 				closePanels();
- 			});
- 
- 			// Escape closes panels
- 			document.addEventListener('keydown', (e) => {
- 				if (e.key === 'Escape') closePanels();
- 			});
- 
- 			function closePanels(){
--				contactSection.classList.add('hidden');
--				overlay.classList.remove('active');
--				pageContainer.classList.remove('blurred');
--				// hide offers and reset reveal state
--				if (offersSection) {
--					offersSection.classList.add('hidden');
--					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
--				}
-+				// hide contact
-+				if (contactSection) {
-+					contactSection.classList.add('hidden');
-+					contactSection.hidden = true;
-+					contactSection.style.display = 'none';
-+					contactSection.setAttribute('aria-hidden','true');
-+				}
-+				// hide offers and reset reveal state
-+				if (offersSection) {
-+					offersSection.classList.add('hidden');
-+					offersSection.hidden = true;
-+					offersSection.style.display = 'none';
-+					offersSection.setAttribute('aria-hidden','true');
-+					document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('reveal'));
-+				}
-+				overlay.classList.remove('active');
-+				pageContainer.classList.remove('blurred');
- 			}
- 			
- 			// clicking outside specific panels will close them (but ignore overlay)
- 			document.addEventListener('click', (e) => {
- 				// if click is inside contact or offers or on their buttons, do nothing
- 				if (contactSection.contains(e.target) || offersSection.contains(e.target) || contactBtn.contains(e.target) || offersBtn.contains(e.target) || e.target === overlay) return;
- 				closePanels();
- 			});
+		// bind contact/offers toggles (guard for missing elements)
+		if (contactBtn) {
+			contactBtn.addEventListener('click', function (ev) {
+				ev.stopPropagation();
+				if (contactSection && contactSection.classList.contains('hidden')) showContact(); else closePanels();
+			});
+		}
+		if (offersBtn) {
+			offersBtn.addEventListener('click', function (ev) {
+				ev.stopPropagation();
+				showOffers();
+				// scroll into view if offers present
+				if (offersSection) {
+					setTimeout(function(){ try { offersSection.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(e){ /* ignore */ } }, 240);
+				}
+			});
+		}
+		if (overlay) overlay.addEventListener('click', function(){ closePanels(); });
+
+		// Escape and outside click close panels
+		document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanels(); });
+		document.addEventListener('click', function (e) {
+			var insideContact = contactSection && contactSection.contains(e.target);
+			var insideOffers = offersSection && offersSection.contains(e.target);
+			var onContactBtn = contactBtn && contactBtn.contains(e.target);
+			var onOffersBtn = offersBtn && offersBtn.contains(e.target);
+			if (insideContact || insideOffers || onContactBtn || onOffersBtn || e.target === overlay) return;
+			closePanels();
+		});
+	});
 	</script>
 </body>
 </html>
-
