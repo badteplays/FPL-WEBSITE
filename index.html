@@ -3,469 +3,446 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Acutech BP - App & Web Development</title>
+    <title>Acutech - App & Web Development</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#F5B041',
+                            blue: '#3498DB',
+                            dark: '#111827',
+                            light: '#fdfdfc'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="bg-brand-light text-slate-800 font-sans overflow-x-hidden antialiased relative z-0">
 
-<nav class="navbar" id="navbar">
-    <div class="container nav-inner">
-        <a class="nav-logo" href="#hero">Acutech<span>BP</span></a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#services">Services</a></li>
-            <li><a href="#longterm">Long-Term Plans</a></li>
-            <li><a href="#why-us">Why Us</a></li>
-            <li><a href="#contact">Contact</a></li>
+<!-- Background animated blobs -->
+<div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+    <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-yellow-300/30 blur-[100px] animate-blob"></div>
+    <div class="absolute top-[20%] right-[-5%] w-[400px] h-[400px] rounded-full bg-blue-300/30 blur-[100px] animate-blob animation-delay-2000"></div>
+    <div class="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] rounded-full bg-amber-200/30 blur-[120px] animate-blob animation-delay-4000"></div>
+</div>
+
+<nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 py-4 border-b border-transparent">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <a href="javascript:void(0)" onclick="switchPage('home')" class="flex items-center gap-2">
+            <img src="logo.png" alt="Acutech Logo" class="h-10 object-contain" />
+            <span class="text-2xl font-black tracking-tight text-brand-dark">Acutech</span>
+        </a>
+        <ul id="navLinks" class="hidden md:flex items-center gap-8 nav-links">
+            <li><a href="javascript:void(0)" onclick="switchPage('home', this)" class="active text-slate-600 hover:text-brand-blue font-medium transition-colors">Home</a></li>
+            <li><a href="javascript:void(0)" onclick="switchPage('services', this)" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Services</a></li>
+            <li><a href="javascript:void(0)" onclick="switchPage('longterm', this)" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Plans</a></li>
+            <li><a href="javascript:void(0)" onclick="switchPage('why-us', this)" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Why Us</a></li>
+            <li><a href="javascript:void(0)" onclick="switchPage('contact', this)" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Contact</a></li>
         </ul>
-        <div class="nav-cta">
-            <a class="btn btn-primary" href="#services">Get Started</a>
+        <div class="hidden md:block">
+            <a href="javascript:void(0)" onclick="switchPage('contact')" class="bg-gradient-to-r from-brand-gold to-brand-blue text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg shadow-brand-blue/30 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand-blue/40 transition-all">Get Started</a>
         </div>
-        <button class="burger" id="burger" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+        <button id="burger" onclick="toggleMobileMenu()" class="md:hidden flex flex-col gap-1.5 p-2">
+            <span class="block w-6 h-0.5 bg-brand-dark rounded-full transition-all"></span>
+            <span class="block w-6 h-0.5 bg-brand-dark rounded-full transition-all"></span>
+            <span class="block w-6 h-0.5 bg-brand-dark rounded-full transition-all"></span>
         </button>
     </div>
 </nav>
 
-<section id="hero" class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-content">
-        <span class="badge reveal">App & Web Development Agency</span>
-        <h1 class="reveal">We Build Digital<br /><span class="gradient-text">Experiences</span></h1>
-        <p class="hero-sub reveal">From mobile apps to stunning websites, we bring your vision to life with cutting-edge technology and pixel-perfect design.</p>
-        <div class="hero-actions reveal">
-            <a class="btn btn-primary btn-glow" href="#services">Explore Services</a>
-            <a class="btn btn-outline" href="#contact">Contact Us</a>
-        </div>
-    </div>
-</section>
-
-<section class="stats-bar">
-    <div class="container stats-grid">
-        <div class="stat-item reveal">
-            <div class="stat-value"><span class="stat-number" data-target="Place ">0</span><span>+</span></div>
-            <span class="stat-label">Projects Delivered</span>
-        </div>
-        <div class="stat-item reveal">
-            <div class="stat-value"><span class="stat-number" data-target="Place">0</span><span>+</span></div>
-            <span class="stat-label">Happy Clients</span>
-        </div>
-        <div class="stat-item reveal">
-            <div class="stat-value"><span class="stat-number" data-target="Place">100</span><span>%</span></div>
-            <span class="stat-label">Uptime Guaranteed</span>
-        </div>
-        <div class="stat-item reveal">
-            <div class="stat-value"><span class="stat-number" data-target="24">0</span><span>/7</span></div>
-            <span class="stat-label">Support Available</span>
-        </div>
-    </div>
-</section>
-
-<section id="services" class="section">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="badge">Our Services</span>
-            <h2>Tailored Packages for <span class="gradient-text">Every Business</span></h2>
-            <p class="section-sub">Choose the perfect package that fits your needs and budget</p>
-        </div>
-        <div class="tabs-wrapper reveal">
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="mobile" onclick="switchTab('mobile', this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                    Mobile Apps
-                </button>
-                <button class="tab-btn" data-tab="web" onclick="switchTab('web', this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    Websites
-                </button>
-            </div>
-        </div>
-
-        <div class="pricing-grid" id="pricingGrid">
-
-            <div class="pricing-card reveal" data-category="mobile">
-                <div class="card-icon">&#x1F4F1;</div>
-                <h3>Starter Pack</h3>
-                <p class="card-desc">Perfect for startups and MVPs</p>
-                <div class="card-price"><span class="currency">$</span><span class="amount">2,999</span></div>
-                <span class="price-type">one-time payment</span>
-                <ul class="features">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Single platform (iOS or Android)</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Up to 3 screens</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Standard UI components</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Basic app store submission</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>30 days post-launch support</li>
-                </ul>
-                <button class="btn btn-primary btn-block" onclick="openModal('Starter Pack', '2,999')">Get Started</button>
-            </div>
-
-            <div class="pricing-card popular reveal" data-category="mobile">
-                <div class="popular-badge">Maybe best deal ehe</div>
-                <div class="card-icon">&#x1F680;</div>
-                <h3>Entrepreneur Pack</h3>
-                <p class="card-desc">Ideal for growing businesses</p>
-                <div class="card-price"><span class="currency">$</span><span class="amount">7,499</span></div>
-                <span class="price-type">one-time payment</span>
-                <ul class="features">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>iOS & Android (cross-platform)</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Up to 10 custom screens</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Custom UI/UX design</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Push notifications</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>API integration</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Analytics dashboard</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>60 days post-launch support</li>
-                </ul>
-                <button class="btn btn-primary btn-block" onclick="openModal('Entrepreneur Pack', '7,499')">Get Started</button>
-            </div>
-
-            <div class="pricing-card reveal" data-category="mobile">
-                <div class="card-icon">&#x1F3E2;</div>
-                <h3>Business Pack</h3>
-                <p class="card-desc">Enterprise-grade solutions</p>
-                <div class="card-price"><span class="currency">$</span><span class="amount">14,999</span></div>
-                <span class="price-type">one-time payment</span>
-                <ul class="features">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>iOS & Android (native)</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited screens</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Premium custom design</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Advanced API integrations</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Admin panel</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Real-time analytics</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Payment gateway integration</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>90 days post-launch support</li>
-                </ul>
-                <button class="btn btn-primary btn-block" onclick="openModal('Business Pack', '14,999')">Get Started</button>
-            </div>
-
-            <div class="pricing-card reveal" data-category="web" style="display:none">
-                <div class="card-icon">&#x1F310;</div>
-                <h3>Starter Pack</h3>
-                <p class="card-desc">Great for personal or small business</p>
-                <div class="card-price"><span class="currency">$</span><span class="amount">999</span></div>
-                <span class="price-type">one-time payment</span>
-                <ul class="features">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Responsive landing page</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Up to 3 sections</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Contact form integration</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Basic SEO setup</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Mobile-friendly design</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>30 days support</li>
-                </ul>
-                <button class="btn btn-primary btn-block" onclick="openModal('Starter Pack', '999')">Get Started</button>
-            </div>
-
-            <div class="pricing-card popular reveal" data-category="web" style="display:none">
-                <div class="popular-badge">Best deal fr fr pls pls pls </div>
-                <div class="card-icon">&#x26A1;</div>
-                <h3>Entrepreneur Pack</h3>
-                <p class="card-desc">For businesses ready to scale</p>
-                <div class="card-price"><span class="currency">$</span><span class="amount">3,499</span></div>
-                <span class="price-type">one-time payment</span>
-                <ul class="features">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Multi-page website (up to 8)</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CMS integration</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Custom animations</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Advanced SEO optimization</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Analytics integration</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Blog setup</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>60 days support</li>
-                </ul>
-                <button class="btn btn-primary btn-block" onclick="openModal('Entrepreneur Pack', '3,499')">Get Started</button>
-            </div>
-
-            <div class="pricing-card reveal" data-category="web" style="display:none">
-                <div class="card-icon">&#x1F48E;</div>
-                <h3>Business Pack</h3>
-                <p class="card-desc">Full-scale web applications</p>
-                <div class="card-price"><span class="currency">$</span><span class="amount">8,999</span></div>
-                <span class="price-type">one-time payment</span>
-                <ul class="features">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited pages</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>E-commerce or web app</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Custom backend & database</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>User authentication system</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Admin dashboard</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Full SEO suite</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Payment processing</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>90 days support</li>
-                </ul>
-                <button class="btn btn-primary btn-block" onclick="openModal('Business Pack', '8,999')">Get Started</button>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<section id="longterm" class="section section-alt">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="badge">Long-Term Partnership</span>
-            <h2>Ongoing Support & <span class="gradient-text">Maintenance</span></h2>
-            <p class="section-sub">Keep your digital products running smoothly with our managed service plans</p>
-        </div>
-        <div class="pricing-grid">
-
-            <div class="pricing-card reveal">
-                <div class="card-icon">&#x1F6E1;&#xFE0F;</div>
-                <h3>Basic Maintenance</h3>
-                <p class="card-desc">Essential upkeep for your product</p>
-                <div class="card-price"><span class="currency">$</span><span class="amount">299</span></div>
-                <span class="price-type">per month</span>
-                <ul class="features">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Monthly software updates</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Security patches</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Bug fixes</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Email support</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Monthly health report</li>
-                </ul>
-                <button class="btn btn-primary btn-block" onclick="openModal('Basic Maintenance', '299/mo')">Get Started</button>
-            </div>
-
-            <div class="pricing-card popular reveal">
-                <div class="popular-badge">Best Value</div>
-                <div class="card-icon">&#x1F4C8;</div>
-                <h3>Growth Plan</h3>
-                <p class="card-desc">Scale with confidence</p>
-                <div class="card-price"><span class="currency">$</span><span class="amount">599</span></div>
-                <span class="price-type">per month</span>
-                <ul class="features">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Basic</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Server management & hosting</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Performance optimization</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Feature enhancements</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Weekly backups</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Uptime monitoring</li>
-                </ul>
-                <button class="btn btn-primary btn-block" onclick="openModal('Growth Plan', '599/mo')">Get Started</button>
-            </div>
-
-            <div class="pricing-card reveal">
-                <div class="card-icon">&#x1F3C6;</div>
-                <h3>Enterprise Plan</h3>
-                <p class="card-desc">Full-service digital partnership</p>
-                <div class="card-price"><span class="currency">$</span><span class="amount">999</span></div>
-                <span class="price-type">per month</span>
-                <ul class="features">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Growth</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Dedicated account manager</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>24/7 priority support</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Custom feature development</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Daily backups</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Load balancing</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Advanced security audits</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Quarterly strategy reviews</li>
-                </ul>
-                <button class="btn btn-primary btn-block" onclick="openModal('Enterprise Plan', '999/mo')">Get Started</button>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<section id="why-us" class="section">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="badge">Why Arcatech</span>
-            <h2>Why Businesses <span class="gradient-text">Choose Us</span></h2>
-            <p class="section-sub">We combine technical excellence with genuine care for your business success</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card reveal">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+<main class="page-container pt-24">
+    <!-- HOME -->
+    <section id="home" class="page active">
+        <div class="min-h-[85vh] flex items-center justify-center relative px-6 text-center">
+            <div class="max-w-4xl mx-auto z-10">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-white border border-brand-gold/30 text-brand-gold font-semibold text-sm mb-6 shadow-sm reveal">App & Web Development Agency</span>
+                <h1 class="text-5xl md:text-7xl font-black text-brand-dark leading-tight mb-6 tracking-tight reveal">We Build Digital <br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-brand-blue">Experiences</span></h1>
+                <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed reveal">From mobile apps to stunning websites, we bring your vision to life with cutting-edge technology and pixel-perfect design.</p>
+                <div class="flex flex-wrap items-center justify-center gap-4 reveal">
+                    <a href="javascript:void(0)" onclick="switchPage('services')" class="bg-gradient-to-r from-brand-gold to-brand-blue text-white px-8 py-4 rounded-xl font-semibold shadow-lg shadow-brand-blue/30 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-blue/40 transition-all">Explore Services</a>
+                    <a href="javascript:void(0)" onclick="switchPage('contact')" class="bg-white text-slate-800 border border-slate-200 px-8 py-4 rounded-xl font-semibold shadow-sm hover:bg-slate-50 transition-all">Contact Us</a>
                 </div>
-                <h4>Cutting-Edge Tech</h4>
-                <p>We use the latest frameworks and tools to build fast, reliable digital products.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-                </div>
-                <h4>Pixel-Perfect Design</h4>
-                <p>Every pixel is crafted with care to deliver a premium user experience.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                </div>
-                <h4>Security First</h4>
-                <p>Enterprise-grade security is baked into every project from day one.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg>
-                </div>
-                <h4>Fast Delivery</h4>
-                <p>Agile development process ensures on-time, on-budget delivery every time.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                </div>
-                <h4>24/7 Support</h4>
-                <p>Round-the-clock support to keep your business running without interruption.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                </div>
-                <h4>Data-Driven</h4>
-                <p>Analytics and insights to help you make informed business decisions.</p>
             </div>
         </div>
-    </div>
-</section>
 
-<section id="contact" class="section section-alt">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="badge">Get In Touch</span>
-            <h2>Let's Start Your <span class="gradient-text">Project</span></h2>
-            <p class="section-sub">Reach out to us via email, phone, or fill out the form below</p>
+        <div class="bg-white/60 backdrop-blur-md border-y border-slate-200/50 py-16">
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+                <div class="reveal">
+                    <div class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-brand-blue mb-2"><span class="stat-number" data-target="150">0</span>+</div>
+                    <div class="text-slate-500 font-medium tracking-wide">Projects Delivered</div>
+                </div>
+                <div class="reveal">
+                    <div class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-brand-blue mb-2"><span class="stat-number" data-target="120">0</span>+</div>
+                    <div class="text-slate-500 font-medium tracking-wide">Happy Clients</div>
+                </div>
+                <div class="reveal">
+                    <div class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-brand-blue mb-2"><span class="stat-number" data-target="100">0</span>%</div>
+                    <div class="text-slate-500 font-medium tracking-wide">Uptime Guarantee</div>
+                </div>
+                <div class="reveal">
+                    <div class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-brand-blue mb-2"><span class="stat-number" data-target="24">0</span>/7</div>
+                    <div class="text-slate-500 font-medium tracking-wide">Support Available</div>
+                </div>
+            </div>
         </div>
-        <div class="contact-grid">
-            <div class="contact-info reveal">
-                <a class="contact-card" href="mailto:contact@arcatech.com">
-                    <div class="contact-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="page py-20 relative">
+        <div class="max-w-7xl mx-auto px-6 z-10 relative">
+            <div class="text-center mb-16 reveal">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-white border border-brand-gold/30 text-brand-gold font-semibold text-sm mb-4 shadow-sm">Our Services</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-brand-dark mb-4 tracking-tight">Tailored Packages for <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-brand-blue">Every Business</span></h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">Choose the perfect package that fits your needs and budget</p>
+            </div>
+
+            <div class="flex justify-center mb-12 reveal">
+                <div class="inline-flex bg-white p-1.5 rounded-2xl shadow-sm border border-slate-100">
+                    <button class="tab-btn active px-8 py-3 rounded-xl font-semibold text-slate-600 transition-all flex items-center gap-2" data-tab="mobile" onclick="switchTab('mobile', this)">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2" stroke-width="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2"/></svg>
+                        Mobile Apps
+                    </button>
+                    <button class="tab-btn px-8 py-3 rounded-xl font-semibold text-slate-600 transition-all flex items-center gap-2" data-tab="web" onclick="switchTab('web', this)">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="2" y1="12" x2="22" y2="12" stroke-width="2"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke-width="2"/></svg>
+                        Websites
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 transition-all duration-300 relative z-20" id="pricingGrid">
+                <!-- Mobile 1 -->
+                <div class="pricing-card bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all reveal flex flex-col" data-category="mobile">
+                    <div class="text-4xl mb-4">📱</div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-2">Starter Pack</h3>
+                    <p class="text-slate-500 text-sm mb-6">Perfect for startups and MVPs</p>
+                    <div class="flex items-start mb-1 text-slate-800">
+                        <span class="text-2xl font-bold mt-1">₱</span>
+                        <span class="text-5xl font-black tracking-tight">150,000</span>
                     </div>
-                    <div>
-                        <h4>Email Us</h4>
-                        <span>contact@arcatech.com</span>
-                    </div>
-                </a>
-                <a class="contact-card" href="tel:+1234567890">
-                    <div class="contact-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    </div>
-                    <div>
-                        <h4>Call Us</h4>
-                        <span>PLACE HOLDER FOR NUMBER OR SOMETHING</span>
-                    </div>
-                </a>
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    </div>
-                    <div>
-                        <h4>Business Hours</h4>
-                        <span>TBA</span>
-                    </div>
+                    <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Single platform (iOS or Android)</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 3 screens</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Standard UI components</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Basic app store submission</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Starter Mobile Pack', '150,000')">Get Started</button>
                 </div>
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <!-- Mobile 2 (Popular) -->
+                <div class="pricing-card bg-gradient-to-b from-brand-dark to-slate-800 rounded-3xl p-8 border border-brand-dark shadow-[0_20px_50px_rgba(52,152,219,0.2)] hover:-translate-y-1 transition-all reveal relative flex flex-col scale-[1.02] z-30" data-category="mobile">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-gold to-brand-blue text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg whitespace-nowrap">Most Popular</div>
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Entrepreneur Pack</h3>
+                    <p class="text-slate-400 text-sm mb-6">Ideal for growing businesses</p>
+                    <div class="flex items-start mb-1 text-white">
+                        <span class="text-2xl font-bold mt-1">₱</span>
+                        <span class="text-5xl font-black tracking-tight">350,000</span>
                     </div>
-                    <div>
-                        <h4>Location</h4>
-                        <span>Available Worldwide</span>
+                    <span class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
+                    <ul class="space-y-4 mb-8 flex-grow relative z-20">
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> iOS & Android (cross-platform)</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 10 custom screens</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom UI/UX design</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Push notifications & API</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Analytics dashboard</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-brand-dark bg-white hover:bg-slate-100 transition-colors shadow-lg relative z-20" onclick="openModal('Entrepreneur Mobile Pack', '350,000')">Get Started</button>
+                    <!-- Glossy overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl pointer-events-none"></div>
+                </div>
+                <!-- Mobile 3 -->
+                <div class="pricing-card bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all reveal flex flex-col" data-category="mobile">
+                    <div class="text-4xl mb-4">🏢</div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-2">Business Pack</h3>
+                    <p class="text-slate-500 text-sm mb-6">Enterprise-grade solutions</p>
+                    <div class="flex items-start mb-1 text-slate-800">
+                        <span class="text-2xl font-bold mt-1">₱</span>
+                        <span class="text-5xl font-black tracking-tight">750,000</span>
                     </div>
+                    <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> iOS & Android (native)</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Unlimited screens</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Advanced API + Admin panel</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Payment gateway integration</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 90 days post-launch support</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Business Mobile Pack', '750,000')">Get Started</button>
                 </div>
-            </div>
-            <form class="contact-form-wrapper reveal" id="contactForm" onsubmit="submitContact(event)">
-                <div class="form-group">
-                    <input type="text" id="contactName" placeholder="Your Name" required />
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="email" id="contactEmail" placeholder="Email Address" required />
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" id="contactPhone" placeholder="Phone Number" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="contactSubject" placeholder="Subject" />
-                </div>
-                <div class="form-group">
-                    <textarea id="contactMessage" placeholder="Tell us about your project..." rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                    Send Message
-                </button>
-            </form>
-        </div>
-    </div>
-</section>
 
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
-    <div class="modal" id="modal">
-        <button class="modal-close" onclick="closeModal()">&times;</button>
-        <h2>Get Started</h2>
-        <p class="modal-sub">Selected: <strong id="modalPackage"></strong> &mdash; <span id="modalPrice"></span></p>
-        <form id="orderForm" onsubmit="submitOrder(event)">
-            <div class="form-group">
-                <input type="text" id="formName" placeholder="Full Name" required />
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <input type="email" id="formEmail" placeholder="Email Address" required />
+
+                <!-- Web 1 -->
+                <div class="pricing-card bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col hidden" data-category="web">
+                    <div class="text-4xl mb-4">🌐</div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-2">Starter Pack</h3>
+                    <p class="text-slate-500 text-sm mb-6">Great for personal or small business</p>
+                    <div class="flex items-start mb-1 text-slate-800">
+                        <span class="text-2xl font-bold mt-1">₱</span>
+                        <span class="text-5xl font-black tracking-tight">50,000</span>
+                    </div>
+                    <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Responsive landing page</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 3 sections</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Contact form integration</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Basic SEO setup</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Starter Web Pack', '50,000')">Get Started</button>
                 </div>
-                <div class="form-group">
-                    <input type="tel" id="formPhone" placeholder="Phone Number" />
+                <!-- Web 2 -->
+                <div class="pricing-card bg-gradient-to-b from-brand-dark to-slate-800 rounded-3xl p-8 border border-brand-dark shadow-[0_20px_50px_rgba(52,152,219,0.2)] hover:-translate-y-1 transition-all relative flex flex-col hidden scale-[1.02] z-30" data-category="web">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-gold to-brand-blue text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg whitespace-nowrap">Most Popular</div>
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Entrepreneur Pack</h3>
+                    <p class="text-slate-400 text-sm mb-6">For businesses ready to scale</p>
+                    <div class="flex items-start mb-1 text-white">
+                        <span class="text-2xl font-bold mt-1">₱</span>
+                        <span class="text-5xl font-black tracking-tight">150,000</span>
+                    </div>
+                    <span class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
+                    <ul class="space-y-4 mb-8 flex-grow relative z-20">
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Multi-page site (up to 8 pages)</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> CMS integration</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Advanced SEO & Animations</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Blog & Analytics setup</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-brand-dark bg-white hover:bg-slate-100 transition-colors shadow-lg relative z-20" onclick="openModal('Entrepreneur Web Pack', '150,000')">Get Started</button>
+                    <!-- Glossy overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl pointer-events-none"></div>
+                </div>
+                <!-- Web 3 -->
+                <div class="pricing-card bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col hidden" data-category="web">
+                    <div class="text-4xl mb-4">💎</div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-2">Business Pack</h3>
+                    <p class="text-slate-500 text-sm mb-6">Full-scale web applications</p>
+                    <div class="flex items-start mb-1 text-slate-800">
+                        <span class="text-2xl font-bold mt-1">₱</span>
+                        <span class="text-5xl font-black tracking-tight">450,000</span>
+                    </div>
+                    <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Unlimited pages & Web App</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom backend & Database</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Auth system & Admin dash</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Payment processing</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Business Web Pack', '450,000')">Get Started</button>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="text" id="formCompany" placeholder="Company Name" />
+        </div>
+    </section>
+
+    <!-- LONG TERM PLANS -->
+    <section id="longterm" class="page py-20 relative">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-white border border-brand-gold/30 text-brand-gold font-semibold text-sm mb-4 shadow-sm">Long-Term Partnership</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-brand-dark mb-4 tracking-tight">Support & <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-brand-blue">Maintenance</span></h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">Keep your digital products running smoothly with our managed service plans</p>
             </div>
-            <div class="form-group">
-                <textarea id="formMessage" placeholder="Tell us about your project and requirements..." rows="4"></textarea>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Basic -->
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col reveal">
+                    <div class="text-4xl mb-4">🛡️</div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-2">Basic Maintenance</h3>
+                    <p class="text-slate-500 text-sm mb-6">Essential upkeep</p>
+                    <div class="flex items-start mb-1 text-slate-800">
+                        <span class="text-xl font-bold mt-1">₱</span>
+                        <span class="text-4xl font-black tracking-tight">15,000</span>
+                    </div>
+                    <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">per month</span>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Monthly software updates</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Security patches & Bug fixes</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Email support</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Basic Maintenance', '15,000/mo')">Get Started</button>
+                </div>
+                <!-- Growth -->
+                <div class="bg-gradient-to-b from-brand-dark to-slate-800 rounded-3xl p-8 border border-brand-dark shadow-[0_20px_50px_rgba(52,152,219,0.2)] hover:-translate-y-1 transition-all relative flex flex-col reveal scale-[1.02] z-30">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-gold to-brand-blue text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg whitespace-nowrap">Best Value</div>
+                    <div class="text-4xl mb-4">📈</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Growth Plan</h3>
+                    <p class="text-slate-400 text-sm mb-6">Scale with confidence</p>
+                    <div class="flex items-start mb-1 text-white">
+                        <span class="text-xl font-bold mt-1">₱</span>
+                        <span class="text-4xl font-black tracking-tight">30,000</span>
+                    </div>
+                    <span class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-8 block">per month</span>
+                    <ul class="space-y-4 mb-8 flex-grow relative z-20">
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Server management & hosting</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Performance optimization</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Priority support & updates</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-brand-dark bg-white hover:bg-slate-100 transition-colors shadow-lg relative z-20" onclick="openModal('Growth Plan', '30,000/mo')">Get Started</button>
+                    <!-- Glossy overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl pointer-events-none"></div>
+                </div>
+                <!-- Enterprise -->
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col reveal">
+                    <div class="text-4xl mb-4">🏆</div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-2">Enterprise Plan</h3>
+                    <p class="text-slate-500 text-sm mb-6">Full-service partnership</p>
+                    <div class="flex items-start mb-1 text-slate-800">
+                        <span class="text-xl font-bold mt-1">₱</span>
+                        <span class="text-4xl font-black tracking-tight">50,000</span>
+                    </div>
+                    <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">per month</span>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Dedicated account manager</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 24/7 priority support</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom feature limits</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Enterprise Plan', '50,000/mo')">Get Started</button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                Submit Inquiry
-            </button>
+        </div>
+    </section>
+
+    <!-- WHY US -->
+    <section id="why-us" class="page py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-white border border-brand-gold/30 text-brand-gold font-semibold text-sm mb-4 shadow-sm">Why Acutech</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-brand-dark mb-4 tracking-tight">Why Businesses <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-brand-blue">Choose Us</span></h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">We combine technical excellence with genuine care for your business success</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-md transition-all text-center reveal">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-blue-50 rounded-2xl flex items-center justify-center text-brand-blue">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-dark mb-3">Cutting-Edge Tech</h4>
+                    <p class="text-slate-600 leading-relaxed text-sm">We use the latest frameworks and tools to build fast, reliable digital products.</p>
+                </div>
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-md transition-all text-center reveal">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-yellow-50 rounded-2xl flex items-center justify-center text-brand-gold">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-dark mb-3">Pixel-Perfect Design</h4>
+                    <p class="text-slate-600 leading-relaxed text-sm">Every pixel is crafted with care to deliver a premium user experience.</p>
+                </div>
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-md transition-all text-center reveal">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-slate-50 rounded-2xl flex items-center justify-center text-brand-dark">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-dark mb-3">Security First</h4>
+                    <p class="text-slate-600 leading-relaxed text-sm">Enterprise-grade security is baked into every project from day one.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="page py-20 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden relative z-10 p-10 md:p-16">
+                <div class="grid md:grid-cols-2 gap-16">
+                    <div class="reveal">
+                        <span class="inline-block py-1.5 px-4 rounded-full bg-blue-50 border border-brand-blue/20 text-brand-blue font-semibold text-sm mb-4 shadow-sm">Get In Touch</span>
+                        <h2 class="text-4xl md:text-5xl font-bold text-brand-dark mb-4 tracking-tight">Let's Start Your <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-brand-blue">Project</span></h2>
+                        <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-10">Reach out to us via email, phone, or fill out the form.</p>
+                        
+                        <div class="space-y-6">
+                            <a href="mailto:contact@acutech.com" class="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 hover:border-brand-blue/30 hover:bg-slate-50 transition-all group">
+                                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-all">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-brand-dark">Email Us</h4>
+                                    <span class="text-slate-500 text-sm">contact@acutech.com</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <form class="space-y-4 reveal" id="contactForm" onsubmit="submitContact(event)">
+                        <input type="text" id="contactName" placeholder="Your Name" class="w-full px-5 py-4 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all" required />
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="email" id="contactEmail" placeholder="Email Address" class="w-full px-5 py-4 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all" required />
+                            <input type="tel" id="contactPhone" placeholder="Phone Number" class="w-full px-5 py-4 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all" />
+                        </div>
+                        <input type="text" id="contactSubject" placeholder="Subject" class="w-full px-5 py-4 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all" />
+                        <textarea id="contactMessage" placeholder="Tell us about your project..." rows="4" class="w-full px-5 py-4 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all resize-none" required></textarea>
+                        <button type="submit" class="w-full bg-gradient-to-r from-brand-gold to-brand-blue text-white px-8 py-4 rounded-xl font-semibold shadow-lg shadow-brand-blue/30 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-blue/40 transition-all flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="modalOverlay" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-[2000] hidden items-center justify-center p-6 opacity-0 transition-opacity duration-300" onclick="closeModalOutside(event)">
+    <div id="modal" class="bg-white w-full max-w-lg rounded-3xl shadow-2xl p-8 relative scale-95 transition-transform duration-300 border border-slate-100">
+        <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-brand-dark transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <h2 class="text-2xl font-bold text-brand-dark mb-1">Get Started</h2>
+        <p class="text-slate-500 text-sm mb-6">Selected: <strong id="modalPackage" class="text-brand-blue"></strong> &mdash; ₱<span id="modalPrice" class="font-semibold"></span></p>
+        <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
+            <input type="text" id="formName" placeholder="Full Name" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all" required />
+            <div class="grid grid-cols-2 gap-4">
+                <input type="email" id="formEmail" placeholder="Email Address" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all" required />
+                <input type="tel" id="formPhone" placeholder="Phone Number" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all" />
+            </div>
+            <input type="text" id="formCompany" placeholder="Company Name" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all" />
+            <textarea id="formMessage" placeholder="Tell us about your project..." rows="3" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all resize-none"></textarea>
+            <button type="submit" class="w-full bg-brand-dark text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-semibold shadow-lg transition-all">Submit Inquiry</button>
         </form>
     </div>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <div class="nav-logo">Arcatech<span></span></div>
-                <p>Building world-class mobile apps and websites for businesses of all sizes. Your digital vision, our expertise.</p>
+<footer class="bg-white/60 backdrop-blur-md border-t border-slate-200/60 pt-20 pb-8 relative z-10">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-1">
+                <a href="javascript:void(0)" onclick="switchPage('home')" class="flex items-center gap-2 mb-4">
+                    <img src="logo.png" alt="Acutech Logo" class="h-8 object-contain" />
+                    <span class="text-xl font-bold tracking-tight text-brand-dark">Acutech</span>
+                </a>
+                <p class="text-slate-500 text-sm leading-relaxed">Building world-class mobile apps and websites for businesses of all sizes. Your digital vision, our expertise.</p>
             </div>
-            <div class="footer-col">
-                <h4>Services</h4>
-                <a href="#services">Mobile Apps</a>
-                <a href="#services">Websites</a>
-                <a href="#longterm">Maintenance</a>
-                <a href="#longterm">Server Management</a>
+            <div>
+                <h4 class="font-bold text-brand-dark mb-6 tracking-wide text-sm uppercase">Services</h4>
+                <div class="flex flex-col gap-3">
+                    <a href="javascript:void(0)" onclick="switchPage('services')" class="text-slate-500 hover:text-brand-blue transition-colors text-sm">Mobile Apps</a>
+                    <a href="javascript:void(0)" onclick="switchPage('services')" class="text-slate-500 hover:text-brand-blue transition-colors text-sm">Websites</a>
+                    <a href="javascript:void(0)" onclick="switchPage('longterm')" class="text-slate-500 hover:text-brand-blue transition-colors text-sm">Maintenance</a>
+                </div>
             </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <a href="#why-us">About Us</a>
-                <a href="#why-us">Why Choose Us</a>
-                <a href="#contact">Contact</a>
+            <div>
+                <h4 class="font-bold text-brand-dark mb-6 tracking-wide text-sm uppercase">Company</h4>
+                <div class="flex flex-col gap-3">
+                    <a href="javascript:void(0)" onclick="switchPage('why-us')" class="text-slate-500 hover:text-brand-blue transition-colors text-sm">About Us</a>
+                    <a href="javascript:void(0)" onclick="switchPage('why-us')" class="text-slate-500 hover:text-brand-blue transition-colors text-sm">Why Choose Us</a>
+                    <a href="javascript:void(0)" onclick="switchPage('contact')" class="text-slate-500 hover:text-brand-blue transition-colors text-sm">Contact</a>
+                </div>
             </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <a href="mailto:contact@arcatech.com">contact@arcatech.com</a>
-                <a href="tel:+1234567890">PLACE HOLDER FOR NUMBER</a>
-                <a>TBA</a>
+            <div>
+                <h4 class="font-bold text-brand-dark mb-6 tracking-wide text-sm uppercase">Contact</h4>
+                <div class="flex flex-col gap-3">
+                    <a href="mailto:contact@acutech.com" class="text-slate-500 hover:text-brand-blue transition-colors text-sm">contact@acutech.com</a>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <span>&copy; 2026 Arcatech. Cant forget about the patent and copright shit</span>
-            <div class="footer-socials">
-                <a href="#" aria-label="Twitter">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-                </a>
-                <a href="#" aria-label="LinkedIn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                </a>
-                <a href="#" aria-label="GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                </a>
-            </div>
+        <div class="border-t border-slate-200/60 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <span class="text-slate-400 text-sm">&copy; 2026 Acutech. All rights reserved.</span>
         </div>
     </div>
 </footer>

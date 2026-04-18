@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
     initScrollReveal();
     initCounters();
     initNavScroll();
+    
+    // Check for hash on load
+    if (window.location.hash) {
+        const page = window.location.hash.substring(1);
+        const validPages = ['home', 'services', 'longterm', 'why-us', 'contact'];
+        if (validPages.includes(page)) {
+            switchPage(page);
+        }
+    }
 });
 
 function initScrollReveal() {
@@ -19,9 +28,6 @@ function initScrollReveal() {
 }
 
 function initCounters() {
-    var statsBar = document.querySelector('.stats-bar');
-    if (!statsBar) return;
-
     var counterObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             if (entry.isIntersecting) {
@@ -31,7 +37,9 @@ function initCounters() {
         });
     }, { threshold: 0.3 });
 
-    counterObserver.observe(statsBar);
+    document.querySelectorAll('.page').forEach(page => {
+        counterObserver.observe(page);
+    });
 }
 
 function animateCounter(el) {
@@ -68,55 +76,139 @@ function initNavScroll() {
     });
 }
 
+function switchPage(pageId, btn) {
+    const pages = document.querySelectorAll('.page');
+    const links = document.querySelectorAll('.nav-links a');
+    
+    // Find link if not provided
+    if (!btn) {
+        links.forEach(l => {
+            const onclick = l.getAttribute('onclick');
+            if (onclick && (onclick.includes(`'${pageId}'`) || onclick.includes(`"${pageId}"`))) {
+                btn = l;
+            }
+        });
+    }
+
+    // Deactivate all
+    pages.forEach(p => p.classList.remove('active'));
+    links.forEach(l => l.classList.remove('active'));
+
+    // Activate target
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.classList.add('active');
+        if (btn) btn.classList.add('active');
+        
+        // Update URL hash without jumping
+        history.pushState(null, null, '#' + pageId);
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
+        
+        // Re-trigger scroll reveal for new visible elements
+        setTimeout(() => {
+            targetPage.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+            });
+            
+            // Re-init counters if switching to home
+            if (pageId === 'home') {
+                targetPage.querySelectorAll('.stat-number').forEach(animateCounter);
+            }
+        }, 100);
+    }
+    
+    // Close mobile menu
+    var nav = document.getElementById('navbar');
+    // For Tailwind we can just assume if we had a mobile open class it would be here
+    nav.classList.remove('mobile-open');
+}
+
 function switchTab(tab, btn) {
     var grid = document.getElementById('pricingGrid');
     var allBtns = document.querySelectorAll('.tab-btn');
     allBtns.forEach(function (b) { b.classList.remove('active'); });
     btn.classList.add('active');
 
-    grid.classList.add('fade-out');
+    grid.style.opacity = '0';
+    grid.style.transform = 'translateY(12px)';
 
     setTimeout(function () {
         var cards = grid.querySelectorAll('.pricing-card');
         cards.forEach(function (card) {
             if (card.getAttribute('data-category') === tab) {
-                card.style.display = 'flex';
-                card.classList.remove('active');
+                card.classList.remove('hidden');
+                card.style.opacity = '0';
                 void card.offsetWidth;
             } else {
-                card.style.display = 'none';
+                card.classList.add('hidden');
             }
         });
 
-        grid.classList.remove('fade-out');
+        grid.style.opacity = '1';
+        grid.style.transform = 'translateY(0)';
 
         setTimeout(function () {
             var visible = grid.querySelectorAll('.pricing-card[data-category="' + tab + '"]');
             visible.forEach(function (card) {
-                card.classList.add('active');
+                card.style.opacity = '1';
             });
         }, 50);
     }, 350);
 }
 
 function toggleMobileMenu() {
-    var nav = document.getElementById('navbar');
-    nav.classList.toggle('mobile-open');
+    var links = document.getElementById('navLinks');
+    links.classList.toggle('hidden');
+    links.classList.toggle('absolute');
+    links.classList.toggle('top-full');
+    links.classList.toggle('left-0');
+    links.classList.toggle('w-full');
+    links.classList.toggle('bg-white');
+    links.classList.toggle('flex-col');
+    links.classList.toggle('py-6');
+    links.classList.toggle('border-b');
 }
 
 function openModal(packageName, price) {
     var overlay = document.getElementById('modalOverlay');
+    var modal = document.getElementById('modal');
+    
     document.getElementById('modalPackage').textContent = packageName;
-    document.getElementById('modalPrice').textContent = '$' + price;
+    document.getElementById('modalPrice').textContent = price;
     document.getElementById('orderForm').reset();
-    overlay.classList.add('active');
+    
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    
+    setTimeout(() => {
+        overlay.classList.remove('opacity-0');
+        overlay.classList.add('opacity-100');
+        modal.classList.remove('scale-95');
+        modal.classList.add('scale-100');
+    }, 10);
+    
     document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
     var overlay = document.getElementById('modalOverlay');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
+    var modal = document.getElementById('modal');
+    
+    overlay.classList.remove('opacity-100');
+    overlay.classList.add('opacity-0');
+    modal.classList.remove('scale-100');
+    modal.classList.add('scale-95');
+    
+    setTimeout(() => {
+        overlay.classList.remove('flex');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    }, 300);
 }
 
 function closeModalOutside(event) {
@@ -135,17 +227,17 @@ function submitOrder(event) {
     var pkg = document.getElementById('modalPackage').textContent;
     var price = document.getElementById('modalPrice').textContent;
 
-    var subject = encodeURIComponent('Inquiry: ' + pkg + ' - ' + price);
+    var subject = encodeURIComponent('Inquiry: ' + pkg + ' - ₱' + price);
     var body = encodeURIComponent(
         'Name: ' + name + '\n' +
         'Email: ' + email + '\n' +
         'Phone: ' + phone + '\n' +
         'Company: ' + company + '\n' +
-        'Package: ' + pkg + ' (' + price + ')\n\n' +
+        'Package: ' + pkg + ' (₱' + price + ')\n\n' +
         'Message:\n' + message
     );
 
-    window.location.href = 'mailto:contact@arcatechbp.com?subject=' + subject + '&body=' + body;
+    window.location.href = 'mailto:contact@acutech.com?subject=' + subject + '&body=' + body;
     closeModal();
 }
 
@@ -165,13 +257,17 @@ function submitContact(event) {
         'Message:\n' + message
     );
 
-    window.location.href = 'mailto:contact@arcatechbp.com?subject=' + subject + '&body=' + body;
+    window.location.href = 'mailto:contact@acutech.com?subject=' + subject + '&body=' + body;
     document.getElementById('contactForm').reset();
 }
 
 document.querySelectorAll('.nav-links a').forEach(function (link) {
     link.addEventListener('click', function () {
         var nav = document.getElementById('navbar');
-        nav.classList.remove('mobile-open');
+        // Handle menu close for tailwind utility classes
+        var links = document.getElementById('navLinks');
+        if(!links.classList.contains('md:flex') && !links.classList.contains('hidden')) {
+            toggleMobileMenu();
+        }
     });
 });
