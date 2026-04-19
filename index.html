@@ -14,10 +14,10 @@
                 extend: {
                     colors: {
                         brand: {
-                            gold: '#F5B041',
-                            blue: '#3498DB',
-                            dark: '#111827',
-                            light: '#fdfdfc'
+                            gold: '#FFC107',
+                            blue: '#007BFF',
+                            dark: '#0A192F',
+                            light: '#F4F9FF'
                         }
                     },
                     fontFamily: {
@@ -29,30 +29,31 @@
     </script>
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-brand-light text-slate-800 font-sans overflow-x-hidden antialiased relative z-0">
+<body class="bg-gradient-to-br from-[#fcfae2] via-[#e6f2ff] to-[#b3dbff] text-slate-800 font-sans overflow-x-hidden antialiased relative z-0 min-h-screen">
 
-<!-- Background animated blobs -->
+<!-- Background animated blobs & Tech Grid -->
 <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-    <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-yellow-300/30 blur-[100px] animate-blob"></div>
-    <div class="absolute top-[20%] right-[-5%] w-[400px] h-[400px] rounded-full bg-blue-300/30 blur-[100px] animate-blob animation-delay-2000"></div>
-    <div class="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] rounded-full bg-amber-200/30 blur-[120px] animate-blob animation-delay-4000"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#007BFF15_1px,transparent_1px),linear-gradient(to_bottom,#007BFF15_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    <div class="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-yellow-300/50 blur-[120px] animate-blob"></div>
+    <div class="absolute top-[20%] right-[-5%] w-[600px] h-[600px] rounded-full bg-brand-blue/30 blur-[120px] animate-blob animation-delay-2000"></div>
+    <div class="absolute bottom-[-10%] left-[20%] w-[800px] h-[800px] rounded-full bg-cyan-300/30 blur-[150px] animate-blob animation-delay-4000"></div>
 </div>
 
 <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 py-4 border-b border-transparent">
     <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <a href="javascript:void(0)" onclick="switchPage('home')" class="flex items-center gap-2">
-            <img src="logo.png" alt="Acutech Logo" class="h-10 object-contain" />
-            <span class="text-2xl font-black tracking-tight text-brand-dark">Acutech</span>
+        <a href="javascript:void(0)" onclick="switchPage('home')" class="flex items-center gap-3">
+            <img src="logo.png" alt="Acutech Logo" class="h-16 md:h-20 object-contain mix-blend-multiply" />
+            <span class="text-3xl font-black tracking-tight text-[#007BFF] drop-shadow-sm">Acutech</span>
         </a>
         <ul id="navLinks" class="hidden md:flex items-center gap-8 nav-links">
-            <li><a href="javascript:void(0)" onclick="switchPage('home', this)" class="active text-slate-600 hover:text-brand-blue font-medium transition-colors">Home</a></li>
-            <li><a href="javascript:void(0)" onclick="switchPage('services', this)" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Services</a></li>
-            <li><a href="javascript:void(0)" onclick="switchPage('longterm', this)" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Plans</a></li>
-            <li><a href="javascript:void(0)" onclick="switchPage('why-us', this)" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Why Us</a></li>
-            <li><a href="javascript:void(0)" onclick="switchPage('contact', this)" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Contact</a></li>
+            <li><a href="javascript:void(0)" onclick="switchPage('home', this)" class="active text-brand-dark hover:text-brand-blue font-semibold transition-colors">Home</a></li>
+            <li><a href="javascript:void(0)" onclick="switchPage('services', this)" class="text-brand-dark hover:text-brand-blue font-semibold transition-colors">Services</a></li>
+            <li><a href="javascript:void(0)" onclick="switchPage('longterm', this)" class="text-brand-dark hover:text-brand-blue font-semibold transition-colors">Plans</a></li>
+            <li><a href="javascript:void(0)" onclick="switchPage('why-us', this)" class="text-brand-dark hover:text-brand-blue font-semibold transition-colors">Why Us</a></li>
+            <li><a href="javascript:void(0)" onclick="switchPage('contact', this)" class="text-brand-dark hover:text-brand-blue font-semibold transition-colors">Contact</a></li>
         </ul>
         <div class="hidden md:block">
-            <a href="javascript:void(0)" onclick="switchPage('contact')" class="bg-gradient-to-r from-brand-gold to-brand-blue text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg shadow-brand-blue/30 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand-blue/40 transition-all">Get Started</a>
+            <a href="javascript:void(0)" onclick="switchPage('contact')" class="bg-gradient-to-r from-brand-gold to-yellow-400 text-brand-dark px-6 py-2.5 rounded-xl font-bold border border-yellow-300 shadow-lg shadow-yellow-500/30 hover:-translate-y-0.5 hover:shadow-xl transition-all">Get Started</a>
         </div>
         <button id="burger" onclick="toggleMobileMenu()" class="md:hidden flex flex-col gap-1.5 p-2">
             <span class="block w-6 h-0.5 bg-brand-dark rounded-full transition-all"></span>
@@ -77,15 +78,15 @@
             </div>
         </div>
 
-        <div class="bg-white/60 backdrop-blur-md border-y border-slate-200/50 py-16">
+        <div class="bg-white/40 backdrop-blur-xl border-y border-white/50 py-16 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
                 <div class="reveal">
-                    <div class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-brand-blue mb-2"><span class="stat-number" data-target="150">0</span>+</div>
-                    <div class="text-slate-500 font-medium tracking-wide">Projects Delivered</div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-brand-blue mb-2"><span class="stat-number" data-target="100">0</span>%</div>
+                    <div class="text-slate-500 font-medium tracking-wide">Client Commitment</div>
                 </div>
                 <div class="reveal">
-                    <div class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-brand-blue mb-2"><span class="stat-number" data-target="120">0</span>+</div>
-                    <div class="text-slate-500 font-medium tracking-wide">Happy Clients</div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-brand-blue mb-2"><span class="stat-number" data-target="360">0</span>°</div>
+                    <div class="text-slate-500 font-medium tracking-wide">Digital Solutions</div>
                 </div>
                 <div class="reveal">
                     <div class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-brand-blue mb-2"><span class="stat-number" data-target="100">0</span>%</div>
@@ -133,10 +134,12 @@
                     </div>
                     <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
                     <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Core MVP functionality</li>
                         <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Single platform (iOS or Android)</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 3 screens</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Standard UI components</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Basic app store submission</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 5 core screens</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom simplified UI/UX</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Basic user authentication</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> App store submission</li>
                     </ul>
                     <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Starter Mobile Pack', '150,000')">Get Started</button>
                 </div>
@@ -152,11 +155,13 @@
                     </div>
                     <span class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
                     <ul class="space-y-4 mb-8 flex-grow relative z-20">
-                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> iOS & Android (cross-platform)</li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 10 custom screens</li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom UI/UX design</li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Push notifications & API</li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Analytics dashboard</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Full cross-platform (iOS & Android)</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 15 custom screens</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Premium custom UI/UX design</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Third-party API/SaaS integrations</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Standard analytics & push notifications</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Admin dashboard access</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 30 days post-launch support</li>
                     </ul>
                     <button class="w-full py-4 rounded-xl font-bold text-brand-dark bg-white hover:bg-slate-100 transition-colors shadow-lg relative z-20" onclick="openModal('Entrepreneur Mobile Pack', '350,000')">Get Started</button>
                     <!-- Glossy overlay -->
@@ -173,11 +178,13 @@
                     </div>
                     <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
                     <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> iOS & Android (native)</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Unlimited screens</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Advanced API + Admin panel</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Payment gateway integration</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 90 days post-launch support</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Scalable microservices backend</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Complex custom logic & workflows</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> High-fidelity UX for multiple roles</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Advanced security (OAuth, Encryption)</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ERP/CRM Integration (Salesforce, etc)</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Dedicated project manager & SLA</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 90 days full-service support</li>
                     </ul>
                     <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Business Mobile Pack', '750,000')">Get Started</button>
                 </div>
@@ -194,10 +201,12 @@
                     </div>
                     <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
                     <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Responsive landing page</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 3 sections</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Contact form integration</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Basic SEO setup</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Responsive landing page & blog</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 5 custom sections</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Free SSL & Custom domain config</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Lead capture form integration</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Basic on-page SEO optimization</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 1 week post-launch support</li>
                     </ul>
                     <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Starter Web Pack', '50,000')">Get Started</button>
                 </div>
@@ -213,10 +222,13 @@
                     </div>
                     <span class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
                     <ul class="space-y-4 mb-8 flex-grow relative z-20">
-                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Multi-page site (up to 8 pages)</li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> CMS integration</li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Advanced SEO & Animations</li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Blog & Analytics setup</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Multi-page Web dashboard or E-commerce</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Headless CMS integration</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Standard 3rd-party API integrations</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Advanced on-page SEO (Core Web Vitals)</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Payment gateway (Stripe/PayPal)</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Advanced analytics setup (GA4)</li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm"><svg class="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 30 days priority maintenance</li>
                     </ul>
                     <button class="w-full py-4 rounded-xl font-bold text-brand-dark bg-white hover:bg-slate-100 transition-colors shadow-lg relative z-20" onclick="openModal('Entrepreneur Web Pack', '150,000')">Get Started</button>
                     <!-- Glossy overlay -->
@@ -233,10 +245,13 @@
                     </div>
                     <span class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-8 block">one-time payment</span>
                     <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Unlimited pages & Web App</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom backend & Database</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Auth system & Admin dash</li>
-                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Payment processing</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Full custom Web Application (React/Node)</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Scalable AWS/GCP cloud infrastructure</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Complex database architecture</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Enterprise-grade security & compliance</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Advanced admin & client portals</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Dedicated account manager & SLA</li>
+                        <li class="flex items-start gap-3 text-slate-600 text-sm"><svg class="w-5 h-5 text-brand-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 90 days full-stack maintenance</li>
                     </ul>
                     <button class="w-full py-4 rounded-xl font-bold text-brand-blue bg-blue-50 hover:bg-blue-100 transition-colors" onclick="openModal('Business Web Pack', '450,000')">Get Started</button>
                 </div>
@@ -408,13 +423,13 @@
     </div>
 </div>
 
-<footer class="bg-white/60 backdrop-blur-md border-t border-slate-200/60 pt-20 pb-8 relative z-10">
+<footer class="bg-white/40 backdrop-blur-xl border-t border-white/50 pt-20 pb-8 relative z-10 shadow-[0_-8px_30px_rgb(0,0,0,0.02)]">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div class="md:col-span-1">
-                <a href="javascript:void(0)" onclick="switchPage('home')" class="flex items-center gap-2 mb-4">
-                    <img src="logo.png" alt="Acutech Logo" class="h-8 object-contain" />
-                    <span class="text-xl font-bold tracking-tight text-brand-dark">Acutech</span>
+                <a href="javascript:void(0)" onclick="switchPage('home')" class="flex items-center gap-4 mb-6">
+                    <img src="logo.png" alt="Acutech Logo" class="h-16 object-contain mix-blend-multiply" />
+                    <span class="text-2xl font-black tracking-tight text-[#007BFF]">Acutech</span>
                 </a>
                 <p class="text-slate-500 text-sm leading-relaxed">Building world-class mobile apps and websites for businesses of all sizes. Your digital vision, our expertise.</p>
             </div>
@@ -442,7 +457,7 @@
             </div>
         </div>
         <div class="border-t border-slate-200/60 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <span class="text-slate-400 text-sm">&copy; 2026 Acutech. All rights reserved.</span>
+            <span class="text-slate-400 text-sm">&copy; 2026 Acutech COPYRIGHT BABY</span>
         </div>
     </div>
 </footer>

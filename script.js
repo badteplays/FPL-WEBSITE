@@ -237,7 +237,12 @@ function submitOrder(event) {
         'Message:\n' + message
     );
 
-    window.location.href = 'mailto:contact@acutech.com?subject=' + subject + '&body=' + body;
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        window.location.href = 'mailto:contact@acutech.com?subject=' + subject + '&body=' + body;
+    } else {
+        window.open('https://mail.google.com/mail/?view=cm&fs=1&to=contact@acutech.com&su=' + subject + '&body=' + body, '_blank');
+    }
     closeModal();
 }
 
@@ -257,7 +262,12 @@ function submitContact(event) {
         'Message:\n' + message
     );
 
-    window.location.href = 'mailto:contact@acutech.com?subject=' + subject + '&body=' + body;
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        window.location.href = 'mailto:contact@acutech.com?subject=' + subject + '&body=' + body;
+    } else {
+        window.open('https://mail.google.com/mail/?view=cm&fs=1&to=contact@acutech.com&su=' + subject + '&body=' + body, '_blank');
+    }
     document.getElementById('contactForm').reset();
 }
 
