@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check for hash on load
     if (window.location.hash) {
         const page = window.location.hash.substring(1);
-        const validPages = ['home', 'services', 'longterm', 'why-us', 'contact'];
+        const validPages = ['home', 'services', 'why-us', 'contact'];
         if (validPages.includes(page)) {
             switchPage(page);
         }
